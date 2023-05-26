@@ -1,16 +1,19 @@
 [
-{
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
-  "authorList": ["CleanroomMC"],
-  "credits": "Authors of this project",
-  "logoFile": "",
-  "screenshots": [],
-  "dependencies": []
-}
+  {
+    "modid": "advanced_containers",
+    "name": "Advanced Containers",
+    "description": "Example placeholder mod.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "Hiiragi283",
+      "CleanroomMC"
+    ],
+    "credits": "Hiiragi283",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
 ]

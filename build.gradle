@@ -9,6 +9,7 @@ plugins {
     id("eclipse")
     id("com.gtnewhorizons.retrofuturagradle") version "1.3.9"
     id("com.matthewprenger.cursegradle") version "1.4.0"
+    id("org.jetbrains.kotlin.jvm") version "1.8.+"
 }
 
 version = project.mod_version
@@ -20,7 +21,7 @@ java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(8))
         // Azul covers the most platforms for Java 8 toolchains, crucially including MacOS arm64
-        vendor.set(org.gradle.jvm.toolchain.JvmVendorSpec.AZUL)
+        vendor.set(JvmVendorSpec.AZUL)
     }
     // Generate sources and javadocs jars when building and publishing
     withSourcesJar()
@@ -37,15 +38,15 @@ configurations {
 }
 
 minecraft {
-    mcVersion = '1.12.2'
+    mcVersion = "1.12.2"
     def args = ["-ea:${project.group}"]
     if (project.use_coremod.toBoolean()) {
-        args << '-Dfml.coreMods.load=' + coremod_plugin_class_name
+        args << "-Dfml.coreMods.load=" + coremod_plugin_class_name
     }
     if (project.use_mixins.toBoolean()) {
-        args << '-Dmixin.hotSwap=true'
-        args << '-Dmixin.checks.interfaces=true'
-        args << '-Dmixin.debug.export=true'
+        args << "-Dmixin.hotSwap=true"
+        args << "-Dmixin.checks.interfaces=true"
+        args << "-Dmixin.debug.export=true"
     }
     extraRunJvmArguments.addAll(args)
 
@@ -61,7 +62,7 @@ tasks.injectTags.configure {
 
 repositories {
     maven {
-        url = 'https://maven.cleanroommc.com'
+        url = "https://maven.cleanroommc.com"
     }
     maven { url = "https://repo.spongepowered.org/maven" }
     //maven { url "https://maven.mcmoddev.com/" }
@@ -71,32 +72,44 @@ repositories {
             includeGroup "curse.maven"
         }
     }
-    mavenLocal() // Must be last for caching to work
+    mavenLocal()
+    mavenCentral() // Must be last for caching to work
 }
 
 dependencies {
+
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
     if (project.use_assetmover.toBoolean()) {
-        implementation 'com.cleanroommc:assetmover:2.0'
+        implementation "com.cleanroommc:assetmover:2.0"
     }
     if (project.use_mixins.toBoolean()) {
-        implementation 'zone.rong:mixinbooter:7.0'
+        implementation "zone.rong:mixinbooter:7.0"
     }
 
     // Example deobf dependency
     // compileOnly rfg.deobf("curse.maven:endercore-231868:2972849:")
 
-    if (project.use_mixins.toBoolean()) {
-        api ("org.spongepowered:mixin:0.8.3") {transitive = false}
-        annotationProcessor('org.ow2.asm:asm-debug-all:5.2')
-        annotationProcessor('com.google.guava:guava:24.1.1-jre')
-        annotationProcessor('com.google.code.gson:gson:2.8.6')
-        annotationProcessor ("org.spongepowered:mixin:0.8.3") {transitive = false}
-    }
+    implementation(rfg.deobf("curse.maven:had-enough-items-557549:4451828"))
+    implementation(rfg.deobf("curse.maven:the-one-probe-245211:2667280"))
 
+    runtimeOnly(rfg.deobf("curse.maven:dans-mouse-tweaks-461660:3962479"))
+    runtimeOnly(rfg.deobf("curse.maven:infinity-item-editor-290958:3802759"))
+    runtimeOnly(rfg.deobf("curse.maven:itemzoom-261725:2643616"))
+    runtimeOnly(rfg.deobf("curse.maven:placebo-283644:2694382"))
+    runtimeOnly(rfg.deobf("curse.maven:shadowfacts-forgelin-248453:2785465"))
+
+    if (project.use_mixins.toBoolean()) {
+        api("org.spongepowered:mixin:0.8.3") { transitive = false }
+        annotationProcessor("org.ow2.asm:asm-debug-all:5.2")
+        annotationProcessor("com.google.guava:guava:24.1.1-jre")
+        annotationProcessor("com.google.code.gson:gson:2.8.6")
+        annotationProcessor("org.spongepowered:mixin:0.8.3") { transitive = false }
+    }
 }
 
-def mixinConfigRefMap = 'mixins.' + project.archives_base_name + '.refmap.json'
-def mixinTmpDir = buildDir.path + File.separator + 'tmp' + File.separator + 'mixins'
+def mixinConfigRefMap = "mixins." + project.archives_base_name + ".refmap.json"
+def mixinTmpDir = buildDir.path + File.separator + "tmp" + File.separator + "mixins"
 def refMap = "${mixinTmpDir}" + File.separator + mixinConfigRefMap
 def mixinSrg = "${mixinTmpDir}" + File.separator + "mixins.srg"
 
@@ -128,19 +141,19 @@ if (project.use_access_transformer.toBoolean()) {
 
 processResources {
     // this will ensure that this task is redone when the versions change.
-    inputs.property 'version', project.version
-    inputs.property 'mcversion', project.minecraft.version
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
     // replace stuff in mcmod.info, nothing else
-    filesMatching(['mcmod.info', 'pack.mcmeta']) { fcd ->
+    filesMatching(["mcmod.info", "pack.mcmeta"]) { fcd ->
         // replace version and mcversion
-        fcd.expand (
-                'version': project.version,
-                'mcversion': project.minecraft.version
+        fcd.expand(
+                "version": project.version,
+                "mcversion": project.minecraft.version
         )
     }
-    
+
     if (project.use_access_transformer.toBoolean()) {
-        rename '(.+_at.cfg)', 'META-INF/$1' // Access Transformers
+        rename("(.+_at.cfg)", 'META-INF/$1') // Access Transformers
     }
 
     if (project.use_mixins.toBoolean()) {
@@ -154,49 +167,54 @@ jar {
     manifest {
         def attribute_map = [:]
         if (project.use_coremod.toBoolean()) {
-            attribute_map['FMLCorePlugin'] = project.coremod_plugin_class_name
+            attribute_map["FMLCorePlugin"] = project.coremod_plugin_class_name
             if (project.include_mod.toBoolean()) {
-                attribute_map['FMLCorePluginContainsFMLMod'] = true
-                attribute_map['ForceLoadAsMod'] = project.gradle.startParameter.taskNames[0] == "build"
+                attribute_map["FMLCorePluginContainsFMLMod"] = true
+                attribute_map["ForceLoadAsMod"] = project.gradle.startParameter.taskNames[0] == "build"
             }
         }
-		if (project.use_access_transformer.toBoolean()) {
-            attribute_map['FMLAT'] = project.archives_base_name + '_at.cfg'
+        if (project.use_access_transformer.toBoolean()) {
+            attribute_map["FMLAT"] = project.archives_base_name + "_at.cfg"
         }
         attributes(attribute_map)
     }
     // Add all embedded dependencies into the jar
-    from(provider{ configurations.embed.collect {it.isDirectory() ? it : zipTree(it)} })
+    from(provider { configurations.embed.collect { it.isDirectory() ? it : zipTree(it) } })
 }
 
 idea {
     module { inheritOutputDirs = true }
-    project { settings {
-        runConfigurations {
-            "1. Run Client"(Gradle) {
-                taskNames = ["runClient"]
+    project {
+        settings {
+            runConfigurations {
+                "1. Run Client"(Gradle) {
+                    taskNames = ["runClient"]
+                }
+                "2. Run Server"(Gradle) {
+                    taskNames = ["runServer"]
+                }
+                "3. Run Obfuscated Client"(Gradle) {
+                    taskNames = ["runObfClient"]
+                }
+                "4. Run Obfuscated Server"(Gradle) {
+                    taskNames = ["runObfServer"]
+                }
             }
-            "2. Run Server"(Gradle) {
-                taskNames = ["runServer"]
-            }
-            "3. Run Obfuscated Client"(Gradle) {
-                taskNames = ["runObfClient"]
-            }
-            "4. Run Obfuscated Server"(Gradle) {
-                taskNames = ["runObfServer"]
+            compiler.javac {
+                afterEvaluate {
+                    javacAdditionalOptions = "-encoding utf8"
+                    moduleJavacAdditionalOptions = [
+                            (project.name + ".main"): tasks.compileJava.options.compilerArgs.collect { "\"" + it + "\"" }.join(" ")
+                    ]
+                }
             }
         }
-        compiler.javac {
-            afterEvaluate {
-                javacAdditionalOptions = "-encoding utf8"
-                moduleJavacAdditionalOptions = [
-                        (project.name + ".main"): tasks.compileJava.options.compilerArgs.collect { '"' + it + '"' }.join(' ')
-                ]
-            }
-        }
-    }}
+    }
 }
 
 tasks.named("processIdeaSettings").configure {
     dependsOn("injectTags")
 }
+
+compileKotlin.kotlinOptions.jvmTarget = "1.8"
+compileTestKotlin.kotlinOptions.jvmTarget = "1.8"
