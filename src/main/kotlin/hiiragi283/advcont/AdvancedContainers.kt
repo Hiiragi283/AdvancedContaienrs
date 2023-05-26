@@ -5,6 +5,8 @@ import hiiragi283.advcont.proxy.IProxy
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.SidedProxy
 import net.minecraftforge.fml.common.event.*
+import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.Logger
 
 @Mod(
     modid = AdvancedContainers.MOD_ID,
@@ -18,6 +20,8 @@ object AdvancedContainers : IProxy {
     const val MOD_ID: String = "advanced_containers"
     const val MOD_NAME: String = "Advanced Containers"
     const val VERSION: String = "0.0.1"
+
+    val LOGGER: Logger = LogManager.getLogger(MOD_NAME)
 
     @JvmStatic
     @Mod.Instance(MOD_ID)
