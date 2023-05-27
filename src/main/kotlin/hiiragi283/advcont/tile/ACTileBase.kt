@@ -1,5 +1,6 @@
 package hiiragi283.advcont.tile
 
+import hiiragi283.advcont.AdvancedContainers
 import hiiragi283.advcont.capabilitiy.ACItemHandlerWrapper
 import hiiragi283.advcont.capabilitiy.ACTankWrapper
 import net.minecraft.block.state.IBlockState
@@ -13,6 +14,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
+import net.minecraft.util.ITickable
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
@@ -45,7 +47,7 @@ abstract class ACTileBase : TileEntity() {
 
     /**
      * Thanks to defeatedcrow!
-     * Source: https://github.com/defeatedcrow/FluidTankTutorialMod/blob/master/src/main/java/defeatedcrow/tutorial/ibc/base/TileIBC.java#L93
+     * Reference: https://github.com/defeatedcrow/FluidTankTutorialMod/blob/master/src/main/java/defeatedcrow/tutorial/ibc/base/TileIBC.java#L93
      */
 
     override fun shouldRefresh(world: World, pos: BlockPos, oldState: IBlockState, newState: IBlockState): Boolean =
@@ -90,5 +92,42 @@ abstract class ACTileBase : TileEntity() {
     }
 
     open fun onTileRemoved(world: World, pos: BlockPos, state: IBlockState) {}
+
+    fun openGui(player: EntityPlayer, world: World, pos: BlockPos) {
+        player.openGui(AdvancedContainers.Instance, 0, world, pos.x, pos.y, pos.z)
+    }
+
+    abstract class Tickable(private val maxCount: Int) : ACTileBase(), ITickable {
+
+        var countdown = 0
+
+        //    ITickable    //
+
+        override fun update() {
+            onUpdateTick()
+            if (countdown >= maxCount) {
+                onUpdate()
+                if (!world.isRemote) {
+                    onUpdateServer()
+                } else {
+                    onUpdateClient()
+                }
+                countdown = 0
+            } else countdown++
+        }
+
+        //1tickごとにサーバー側とクライアント側で同時に実行するメソッド
+        open fun onUpdateTick() {}
+
+        //20tickごとにサーバー側とクライアント側で同時に実行するメソッド
+        open fun onUpdate() {}
+
+        //20tickごとにサーバー側で実行するメソッド
+        open fun onUpdateServer() {}
+
+        //20tickごとにクライアント側で実行するメソッド
+        open fun onUpdateClient() {}
+
+    }
 
 }

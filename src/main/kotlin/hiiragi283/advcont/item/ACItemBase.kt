@@ -9,14 +9,14 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import net.minecraftforge.registries.IForgeRegistry
 
-abstract class ACItemBase(ID: String, private var maxMeta: Int) : Item() {
+abstract class ACItemBase(ID: String, private var maxMeta: Int) : Item(), IACItem {
 
     init {
         setRegistryName(AdvancedContainers.MOD_ID, ID)
         creativeTab = CreativeTabs.MISC
         hasSubtypes = maxMeta > 0
         maxMeta = 0.coerceAtLeast(maxMeta)
-        translationKey = ID
+        translationKey = "${AdvancedContainers.MOD_ID}.${ID}"
     }
 
     //    General    //
@@ -36,18 +36,19 @@ abstract class ACItemBase(ID: String, private var maxMeta: Int) : Item() {
         }
     }
 
-    //    ItemBase    //
+    //    IACItem    //
 
-    open fun register(registry: IForgeRegistry<Item>) {
+    override fun register(registry: IForgeRegistry<Item>) {
         registry.register(this)
         AdvancedContainers.LOGGER.debug("The item $registryName was registered!")
     }
 
     @SideOnly(Side.CLIENT)
-    open fun registerModel() {}
+    override fun registerModel() {
+    }
 
-    open fun registerOreDict() {}
+    override fun registerOreDict() {}
 
-    open fun registerRecipe() {}
+    override fun registerRecipe() {}
 
 }

@@ -1,13 +1,13 @@
 package hiiragi283.advcont.block
 
 import hiiragi283.advcont.AdvancedContainers
+import hiiragi283.advcont.item.ACItemBlockBase
 import hiiragi283.advcont.tile.ACTileBase
 import net.minecraft.block.ITileEntityProvider
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.ItemBlock
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumFacing
@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry
 abstract class ACBlockContainer<T : ACTileBase>(ID: String, material: Material, val tile: Class<T>, maxTips: Int) :
     ACBlockBase(ID, material, maxTips), ITileEntityProvider {
 
-    override val itemBlock: ItemBlock? = ItemBlock(this)
+    override val itemBlock: ACItemBlockBase? = ACItemBlockBase(this)
 
     init {
         GameRegistry.registerTileEntity(tile, ResourceLocation(AdvancedContainers.MOD_ID, "te_$ID"))
@@ -76,7 +76,7 @@ abstract class ACBlockContainer<T : ACTileBase>(ID: String, material: Material, 
 
     override fun createNewTileEntity(worldIn: World, meta: Int): T = tile.newInstance()
 
-    abstract class BlockContainerHoldable<T : ACTileBase>(ID: String, material: Material, tile: Class<T>, maxTips: Int) :
+    abstract class Holdable<T : ACTileBase>(ID: String, material: Material, tile: Class<T>, maxTips: Int) :
         ACBlockContainer<T>(ID, material, tile, maxTips) {
 
         //    General    //

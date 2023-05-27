@@ -1,14 +1,18 @@
 package hiiragi283.advcont.item
 
+import hiiragi283.advcont.AdvancedContainers
+import hiiragi283.advcont.util.ModelUtil
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.item.Item
 import net.minecraft.item.ItemBlock
 import net.minecraft.item.ItemStack
 import net.minecraft.util.NonNullList
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
+import net.minecraftforge.registries.IForgeRegistry
 
-open class ACItemBlockBase(block: Block, private val maxMeta: Int = 0) : ItemBlock(block) {
+open class ACItemBlockBase(block: Block, private val maxMeta: Int = 0) : ItemBlock(block), IACItem {
 
     init {
         hasSubtypes = maxMeta > 0 //メタデータを使用するかどうか
@@ -33,4 +37,24 @@ open class ACItemBlockBase(block: Block, private val maxMeta: Int = 0) : ItemBlo
             }
         }
     }
+
+    //    IACItem    //
+
+
+    override fun register(registry: IForgeRegistry<Item>) {
+        registry.register(this)
+        AdvancedContainers.LOGGER.debug("The item $registryName was registered!")
+    }
+
+    @SideOnly(Side.CLIENT)
+    override fun registerModel() {
+        for (i in 0..maxMeta) {
+            ModelUtil.setItemModel(this, i)
+        }
+    }
+
+    override fun registerOreDict() {}
+
+    override fun registerRecipe() {}
+
 }
