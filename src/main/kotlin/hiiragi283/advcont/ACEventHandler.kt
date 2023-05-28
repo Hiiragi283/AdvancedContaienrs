@@ -44,6 +44,7 @@ object ACEventHandler {
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     fun registerModel(event: ModelRegistryEvent) {
+        ACBlocks.registerModel()
         ACItems.registerModel()
     }
 

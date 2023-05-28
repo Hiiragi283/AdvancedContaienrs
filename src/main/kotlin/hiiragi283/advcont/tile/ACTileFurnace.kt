@@ -1,5 +1,6 @@
 package hiiragi283.advcont.tile
 
+import hiiragi283.advcont.block.ACProperty
 import hiiragi283.advcont.capabilitiy.ACCapabilityProvider
 import hiiragi283.advcont.capabilitiy.ACItemHandler
 import hiiragi283.advcont.capabilitiy.ACItemHandlerWrapper
@@ -74,20 +75,22 @@ class ACTileFurnace : ACTileBase.Tickable(20 * 10), ITileContainer, ITileProvide
             fuel.shrink(1)
         }
         //inputスロット内のItemStackから完成品を取得
-        val input = input.getStackInSlot(0)
-        if (!input.isEmpty) {
-            val result = FurnaceRecipes.instance().getSmeltingResult(input)
+        val stack = input.getStackInSlot(0)
+        if (!stack.isEmpty) {
+            val result = FurnaceRecipes.instance().getSmeltingResult(stack).copy()
             if (!result.isEmpty) {
                 //outputスロットに搬入を試みる
-                val excess = output.insertItem(0, result, true)
+                val excess = output.insertItem(0, result.copy(), true)
                 //余剰分が存在しない，すなわち搬入が成功する場合 && burnTimeが200以上の場合
                 if (excess.isEmpty && canBurn()) {
-                    input.shrink(1)
-                    output.insertItem(0, result, false)
+                    input.extractItem(0, 1, false)
+                    output.insertItem(0, result.copy(), false)
                     burnTime -= 200
                 }
             }
         }
+        //燃焼時間からBlockStateを更新する
+        world.setBlockState(pos, getState().withProperty(ACProperty.ACTIVE, canBurn()), 13)
     }
 
     //    ITileContainer    //

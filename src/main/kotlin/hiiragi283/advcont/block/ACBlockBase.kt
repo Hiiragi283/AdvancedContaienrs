@@ -1,6 +1,7 @@
 package hiiragi283.advcont.block
 
 import hiiragi283.advcont.AdvancedContainers
+import hiiragi283.advcont.init.IACEntry
 import hiiragi283.advcont.item.ACItemBlockBase
 import net.minecraft.block.Block
 import net.minecraft.block.BlockHorizontal
@@ -21,7 +22,8 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import net.minecraftforge.registries.IForgeRegistry
 
-abstract class ACBlockBase(ID: String, Material: Material, private val maxTips: Int) : Block(Material) {
+abstract class ACBlockBase(ID: String, Material: Material, private val maxTips: Int) : Block(Material),
+    IACEntry<Block> {
 
     abstract val itemBlock: ACItemBlockBase?
 
@@ -88,11 +90,19 @@ abstract class ACBlockBase(ID: String, Material: Material, private val maxTips: 
         }
     }
 
-    //    BlockBase    //
+    //    IACEntry    //
 
-    fun register(registry: IForgeRegistry<Block>) {
+    override fun register(registry: IForgeRegistry<Block>) {
         registry.register(this)
         AdvancedContainers.LOGGER.debug("The block $registryName was registered!")
     }
+
+    @SideOnly(Side.CLIENT)
+    override fun registerModel() {
+    }
+
+    override fun registerOreDict() {}
+
+    override fun registerRecipe() {}
 
 }

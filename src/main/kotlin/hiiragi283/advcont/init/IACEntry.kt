@@ -1,13 +1,13 @@
-package hiiragi283.advcont.item
+package hiiragi283.advcont.init
 
-import net.minecraft.item.Item
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import net.minecraftforge.registries.IForgeRegistry
+import net.minecraftforge.registries.IForgeRegistryEntry
 
-interface IACItem {
+interface IACEntry<T : IForgeRegistryEntry.Impl<T>> {
 
-    fun register(registry: IForgeRegistry<Item>)
+    fun register(registry: IForgeRegistry<T>)
 
     @SideOnly(Side.CLIENT)
     fun registerModel()

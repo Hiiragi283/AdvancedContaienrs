@@ -8,7 +8,7 @@ interface ITileContainer : IInteractionObject {
 
     override fun getDisplayName() = TextComponentTranslation(this.name)
 
-    override fun getName() = "gui.${AdvancedContainers.MOD_ID}.$guiID"
+    override fun getName() = "gui.${AdvancedContainers.MOD_ID}.$guiID.name"
 
     override fun hasCustomName() = false
 

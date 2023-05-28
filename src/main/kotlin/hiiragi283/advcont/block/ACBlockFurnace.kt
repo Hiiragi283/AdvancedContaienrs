@@ -10,15 +10,18 @@ import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.util.EnumFacing
-import net.minecraft.util.EnumHand
-import net.minecraft.util.Mirror
-import net.minecraft.util.Rotation
+import net.minecraft.init.Blocks
+import net.minecraft.item.ItemStack
+import net.minecraft.item.crafting.Ingredient
+import net.minecraft.util.*
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import net.minecraftforge.fml.common.registry.GameRegistry
+import net.minecraftforge.fml.relauncher.Side
+import net.minecraftforge.fml.relauncher.SideOnly
 
 object ACBlockFurnace :
-    ACBlockContainer.Holdable<ACTileFurnace>("furnace", Material.ROCK, ACTileFurnace::class.java, 0) {
+    ACBlockContainer.Holdable<ACTileFurnace>("furnace", Material.ROCK, ACTileFurnace::class.java, -1) {
 
     init {
         blockHardness = 3.5f
@@ -70,4 +73,25 @@ object ACBlockFurnace :
         return setFacing(state, facing, BlockHorizontal.FACING)
     }
 
+    //    IACEntry    //
+
+    @SideOnly(Side.CLIENT)
+    override fun registerModel() {
+        itemBlock?.registerModel()
+    }
+
+    override fun registerRecipe() {
+        GameRegistry.addShapelessRecipe(
+            registryName!!,
+            registryName!!,
+            ItemStack(this),
+            Ingredient.fromStacks(ItemStack(Blocks.FURNACE))
+        )
+        GameRegistry.addShapelessRecipe(
+            ResourceLocation("furnace_alt"),
+            ResourceLocation("furnace_alt"),
+            ItemStack(Blocks.FURNACE),
+            Ingredient.fromStacks(ItemStack(this))
+        )
+    }
 }

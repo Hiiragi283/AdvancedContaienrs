@@ -1,6 +1,7 @@
 package hiiragi283.advcont.item
 
 import hiiragi283.advcont.AdvancedContainers
+import hiiragi283.advcont.init.IACEntry
 import hiiragi283.advcont.util.ModelUtil
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
@@ -12,7 +13,7 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import net.minecraftforge.registries.IForgeRegistry
 
-open class ACItemBlockBase(block: Block, private val maxMeta: Int = 0) : ItemBlock(block), IACItem {
+open class ACItemBlockBase(block: Block, private val maxMeta: Int = 0) : ItemBlock(block), IACEntry<Item> {
 
     init {
         hasSubtypes = maxMeta > 0 //メタデータを使用するかどうか
@@ -38,7 +39,7 @@ open class ACItemBlockBase(block: Block, private val maxMeta: Int = 0) : ItemBlo
         }
     }
 
-    //    IACItem    //
+    //    IACEntry    //
 
 
     override fun register(registry: IForgeRegistry<Item>) {

@@ -1,6 +1,7 @@
 package hiiragi283.advcont.item
 
 import hiiragi283.advcont.AdvancedContainers
+import hiiragi283.advcont.init.IACEntry
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -9,7 +10,7 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import net.minecraftforge.registries.IForgeRegistry
 
-abstract class ACItemBase(ID: String, private var maxMeta: Int) : Item(), IACItem {
+abstract class ACItemBase(ID: String, private var maxMeta: Int) : Item(), IACEntry<Item> {
 
     init {
         setRegistryName(AdvancedContainers.MOD_ID, ID)
@@ -36,7 +37,7 @@ abstract class ACItemBase(ID: String, private var maxMeta: Int) : Item(), IACIte
         }
     }
 
-    //    IACItem    //
+    //    IACEntry    //
 
     override fun register(registry: IForgeRegistry<Item>) {
         registry.register(this)
