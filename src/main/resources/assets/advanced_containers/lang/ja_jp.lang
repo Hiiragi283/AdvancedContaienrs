@@ -3,6 +3,14 @@
 
 tile.advanced_containers.furnace.name=発展型かまど
 
+##    CreativeTab    ##
+
+itemGroup.advanced_containers.potion=スタック可能なポーション
+
 ##    GUI    ##
 
 gui.advanced_containers.furnace.name=発展型かまど
+
+##    Item    ##
+
+item.advanced_containers.potion.name=スタック可能な%s

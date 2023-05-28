@@ -7,6 +7,7 @@ import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ResourceLocation
+import net.minecraftforge.client.event.ColorHandlerEvent
 import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.event.AttachCapabilitiesEvent
 import net.minecraftforge.event.RegistryEvent
@@ -39,6 +40,19 @@ object ACEventHandler {
     @SubscribeEvent
     fun registerItems(event: RegistryEvent.Register<Item>) {
         ACItems.register(event.registry)
+    }
+
+    @SideOnly(Side.CLIENT)
+    @SubscribeEvent
+    fun registerColorBlock(event: ColorHandlerEvent.Block) {
+        ACBlocks.registerColorBlock(event.blockColors)
+    }
+
+    @SideOnly(Side.CLIENT)
+    @SubscribeEvent
+    fun registerColorItem(event: ColorHandlerEvent.Item) {
+        ACItems.registerColorBlock(event.blockColors)
+        ACItems.registerColorItem(event.itemColors)
     }
 
     @SideOnly(Side.CLIENT)

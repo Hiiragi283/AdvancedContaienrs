@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext
 
 object ACMessageHandler {
 
-    class Furnace: IMessageHandler<ACMessage.Furnace, IMessage> {
+    class Furnace : IMessageHandler<ACMessage.Furnace, IMessage> {
 
         override fun onMessage(message: ACMessage.Furnace, ctx: MessageContext?): IMessage? {
             val tile = Minecraft.getMinecraft().world.getTileEntity(BlockPos(message.x, message.y, message.z))

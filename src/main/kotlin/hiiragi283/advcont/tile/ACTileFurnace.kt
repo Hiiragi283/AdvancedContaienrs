@@ -46,8 +46,8 @@ class ACTileFurnace : ACTileBase.Tickable(20 * 10), ITileContainer, ITileProvide
     //    Capability    //
 
     override fun createInventory(): ACCapabilityProvider<IItemHandler> {
-        input = ACItemHandler(1, this).setIOType(EnumIOType.INPUT)
         fuel = ACItemHandler(1, this).setIOType(EnumIOType.INPUT)
+        input = ACItemHandler(1, this).setIOType(EnumIOType.INPUT)
         output = ACItemHandler(1, this).setIOType(EnumIOType.OUTPUT)
         inventory = ACItemHandlerWrapper(input, fuel, output)
         return ACCapabilityProvider(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, inventory, inventory)

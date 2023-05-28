@@ -4,6 +4,8 @@ import hiiragi283.advcont.AdvancedContainers
 import hiiragi283.advcont.init.IACEntry
 import hiiragi283.advcont.util.ModelUtil
 import net.minecraft.block.Block
+import net.minecraft.client.renderer.color.BlockColors
+import net.minecraft.client.renderer.color.ItemColors
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.Item
 import net.minecraft.item.ItemBlock
@@ -47,15 +49,23 @@ open class ACItemBlockBase(block: Block, private val maxMeta: Int = 0) : ItemBlo
         AdvancedContainers.LOGGER.debug("The item $registryName was registered!")
     }
 
+    override fun registerOreDict() {}
+
+    override fun registerRecipe() {}
+
+    @SideOnly(Side.CLIENT)
+    override fun registerColorBlock(blockColors: BlockColors) {
+    }
+
+    @SideOnly(Side.CLIENT)
+    override fun registerColorItem(itemColors: ItemColors) {
+    }
+
     @SideOnly(Side.CLIENT)
     override fun registerModel() {
         for (i in 0..maxMeta) {
             ModelUtil.setItemModel(this, i)
         }
     }
-
-    override fun registerOreDict() {}
-
-    override fun registerRecipe() {}
 
 }

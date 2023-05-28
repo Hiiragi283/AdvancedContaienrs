@@ -2,6 +2,9 @@ package hiiragi283.advcont.item
 
 import hiiragi283.advcont.AdvancedContainers
 import hiiragi283.advcont.init.IACEntry
+import hiiragi283.advcont.util.ModelUtil
+import net.minecraft.client.renderer.color.BlockColors
+import net.minecraft.client.renderer.color.ItemColors
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -44,12 +47,23 @@ abstract class ACItemBase(ID: String, private var maxMeta: Int) : Item(), IACEnt
         AdvancedContainers.LOGGER.debug("The item $registryName was registered!")
     }
 
-    @SideOnly(Side.CLIENT)
-    override fun registerModel() {
-    }
-
     override fun registerOreDict() {}
 
     override fun registerRecipe() {}
+
+    @SideOnly(Side.CLIENT)
+    override fun registerColorBlock(blockColors: BlockColors) {
+    }
+
+    @SideOnly(Side.CLIENT)
+    override fun registerColorItem(itemColors: ItemColors) {
+    }
+
+    @SideOnly(Side.CLIENT)
+    override fun registerModel() {
+        for (i in 0..maxMeta) {
+            ModelUtil.setItemModel(this, i)
+        }
+    }
 
 }

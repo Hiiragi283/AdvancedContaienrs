@@ -11,6 +11,8 @@ import net.minecraft.block.properties.PropertyDirection
 import net.minecraft.block.properties.PropertyEnum
 import net.minecraft.block.properties.PropertyInteger
 import net.minecraft.block.state.IBlockState
+import net.minecraft.client.renderer.color.BlockColors
+import net.minecraft.client.renderer.color.ItemColors
 import net.minecraft.client.resources.I18n
 import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.creativetab.CreativeTabs
@@ -97,12 +99,20 @@ abstract class ACBlockBase(ID: String, Material: Material, private val maxTips: 
         AdvancedContainers.LOGGER.debug("The block $registryName was registered!")
     }
 
-    @SideOnly(Side.CLIENT)
-    override fun registerModel() {
-    }
-
     override fun registerOreDict() {}
 
     override fun registerRecipe() {}
+
+    @SideOnly(Side.CLIENT)
+    override fun registerColorBlock(blockColors: BlockColors) {
+    }
+
+    @SideOnly(Side.CLIENT)
+    override fun registerColorItem(itemColors: ItemColors) {
+    }
+
+    @SideOnly(Side.CLIENT)
+    override fun registerModel() {
+    }
 
 }

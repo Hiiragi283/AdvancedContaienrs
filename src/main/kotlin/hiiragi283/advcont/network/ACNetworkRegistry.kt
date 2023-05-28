@@ -9,7 +9,12 @@ object ACNetworkRegistry {
 
     fun register() {
         NetworkRegistry.INSTANCE.registerGuiHandler(AdvancedContainers.Instance, ACGuiHandler)
-        AdvancedContainers.CHANNEL.registerMessage(ACMessageHandler.Furnace::class.java, ACMessage.Furnace::class.java, 0, Side.CLIENT)
+        AdvancedContainers.CHANNEL.registerMessage(
+            ACMessageHandler.Furnace::class.java,
+            ACMessage.Furnace::class.java,
+            0,
+            Side.CLIENT
+        )
     }
 
 }

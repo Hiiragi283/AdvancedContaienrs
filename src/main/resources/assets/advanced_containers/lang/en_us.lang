@@ -3,6 +3,14 @@
 
 tile.advanced_containers.furnace.name=Advanced Furnace
 
+##    CreativeTab    ##
+
+itemGroup.advanced_containers.potion=Stackable Potion
+
 ##    GUI    ##
 
 gui.advanced_containers.furnace.name=Advanced Furnace
+
+##    Item    ##
+
+item.advanced_containers.potion.name=Stackable %s
