@@ -25,9 +25,9 @@ class ACContainerFurnace(player: InventoryPlayer, tile: ACTileFurnace) : ACConta
                 //input, fuel, output -> inventory, hotbar
                 in 0..2 -> if (!mergeItemStack(
                         stackSlot,
-                        inventory.size,
+                        tile.inventory.slots,
                         inventorySlots.size,
-                        true
+                        false
                     )
                 ) return ItemStack.EMPTY
                 //Inventory, HotBar -> input, fuel

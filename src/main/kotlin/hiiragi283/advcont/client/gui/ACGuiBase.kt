@@ -16,8 +16,8 @@ abstract class ACGuiBase<T : ACTileBase>(private val container: ACContainerBase<
 
     abstract val background: ResourceLocation
 
-    fun getOriginX() = (width - xSize) / 2
-    fun getOriginY() = (height - ySize) / 2
+    //fun getOriginX() = (width - xSize) / 2
+    //fun getOriginY() = (height - ySize) / 2
 
     override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
         drawDefaultBackground()
@@ -33,7 +33,7 @@ abstract class ACGuiBase<T : ACTileBase>(private val container: ACContainerBase<
     override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f)
         mc.textureManager.bindTexture(background)
-        this.drawTexturedModalRect(getOriginX(), getOriginY(), 0, 0, xSize, ySize)
+        this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize)
     }
 
     /**

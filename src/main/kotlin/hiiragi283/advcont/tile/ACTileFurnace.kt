@@ -1,11 +1,13 @@
 package hiiragi283.advcont.tile
 
+import hiiragi283.advcont.AdvancedContainers
 import hiiragi283.advcont.block.ACProperty
 import hiiragi283.advcont.capabilitiy.ACCapabilityProvider
 import hiiragi283.advcont.capabilitiy.ACItemHandler
 import hiiragi283.advcont.capabilitiy.ACItemHandlerWrapper
 import hiiragi283.advcont.capabilitiy.EnumIOType
 import hiiragi283.advcont.container.ACContainerFurnace
+import hiiragi283.advcont.network.ACMessage
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.item.crafting.FurnaceRecipes
@@ -25,7 +27,7 @@ class ACTileFurnace : ACTileBase.Tickable(20 * 10), ITileContainer, ITileProvide
     lateinit var fuel: ACItemHandler<ACTileFurnace>
     lateinit var output: ACItemHandler<ACTileFurnace>
 
-    private var burnTime: Int = 0
+    var burnTime: Int = 0
 
     fun canBurn(): Boolean = burnTime >= 200
 
@@ -90,7 +92,9 @@ class ACTileFurnace : ACTileBase.Tickable(20 * 10), ITileContainer, ITileProvide
             }
         }
         //燃焼時間からBlockStateを更新する
-        world.setBlockState(pos, getState().withProperty(ACProperty.ACTIVE, canBurn()), 13)
+        world.setBlockState(pos, getState().withProperty(ACProperty.ACTIVE, canBurn()), 2)
+        //Client側にパケットを送る
+        AdvancedContainers.CHANNEL.sendToAll(ACMessage.Furnace(pos.x, pos.y, pos.z, burnTime))
     }
 
     //    ITileContainer    //

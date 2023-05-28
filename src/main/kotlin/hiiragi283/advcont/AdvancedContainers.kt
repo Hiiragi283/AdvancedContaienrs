@@ -5,6 +5,8 @@ import hiiragi283.advcont.proxy.IProxy
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.SidedProxy
 import net.minecraftforge.fml.common.event.*
+import net.minecraftforge.fml.common.network.NetworkRegistry
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 
@@ -21,6 +23,7 @@ object AdvancedContainers : IProxy {
     const val MOD_NAME: String = "Advanced Containers"
     const val VERSION: String = "0.0.1"
 
+    val CHANNEL: SimpleNetworkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel(MOD_ID)
     val LOGGER: Logger = LogManager.getLogger(MOD_NAME)
 
     @JvmStatic
