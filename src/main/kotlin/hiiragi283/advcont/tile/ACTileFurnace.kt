@@ -10,6 +10,7 @@ import hiiragi283.advcont.container.ACContainerFurnace
 import hiiragi283.advcont.network.ACMessage
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.InventoryPlayer
+import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.FurnaceRecipes
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntityFurnace
@@ -46,7 +47,14 @@ class ACTileFurnace : ACTileBase.Tickable(20 * 10), ITileContainer, ITileProvide
     //    Capability    //
 
     override fun createInventory(): ACCapabilityProvider<IItemHandler> {
-        fuel = ACItemHandler(1, this).setIOType(EnumIOType.INPUT)
+        fuel = object : ACItemHandler<ACTileFurnace>(1, this) {
+
+            override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack =
+                if (isItemValid(slot, stack)) super.insertItem(slot, stack, simulate) else stack
+
+            override fun isItemValid(slot: Int, stack: ItemStack): Boolean = TileEntityFurnace.isItemFuel(stack)
+
+        }.setIOType(EnumIOType.INPUT)
         input = ACItemHandler(1, this).setIOType(EnumIOType.INPUT)
         output = ACItemHandler(1, this).setIOType(EnumIOType.OUTPUT)
         inventory = ACItemHandlerWrapper(input, fuel, output)

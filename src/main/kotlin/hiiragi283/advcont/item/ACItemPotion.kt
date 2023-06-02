@@ -23,7 +23,7 @@ import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 
-object ACItemPotion : ACItemBase("potion", 0) {
+object ACItemPotion : ACItemBase("potion", 0, 0) {
 
     init {
         creativeTab = ACCreativeTabs.POTION
@@ -49,12 +49,12 @@ object ACItemPotion : ACItemBase("potion", 0) {
 
     override fun onItemUseFinish(stack: ItemStack, world: World, entityLiving: EntityLivingBase): ItemStack {
         if (!world.isRemote) {
-            for (potion in PotionUtils.getEffectsFromStack(stack)) {
+            PotionUtils.getEffectsFromStack(stack).forEach {
                 //即時効果の場合は付与方法を変更
-                if (potion.potion.isInstant) {
-                    potion.potion.affectEntity(entityLiving, entityLiving, entityLiving, potion.amplifier, 1.0)
+                if (it.potion.isInstant) {
+                    it.potion.affectEntity(entityLiving, entityLiving, entityLiving, it.amplifier, 1.0)
                 } else {
-                    entityLiving.addPotionEffect(PotionEffect(potion))
+                    entityLiving.addPotionEffect(PotionEffect(it))
                 }
             }
             //空のビンをその場にドロップする

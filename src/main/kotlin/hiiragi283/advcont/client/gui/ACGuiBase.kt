@@ -26,7 +26,8 @@ abstract class ACGuiBase<T : ACTileBase>(private val container: ACContainerBase<
     }
 
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
-        fontRenderer.drawString(container.tile.displayName!!.unformattedText, 8, 6, 0x404040)
+        val title = container.tile.displayName?.unformattedText ?: ""
+        fontRenderer.drawString(title, xSize / 2 - fontRenderer.getStringWidth(title) / 2, 6, 0x404040)
         fontRenderer.drawString(container.player.displayName.unformattedText, 8, ySize - 96 + 2, 0x404040)
     }
 

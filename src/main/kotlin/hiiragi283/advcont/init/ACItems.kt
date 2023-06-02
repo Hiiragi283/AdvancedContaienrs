@@ -13,6 +13,7 @@ object ACItems : IACEntry<Item> {
     val POTION = ACItemPotion
 
     override fun register(registry: IForgeRegistry<Item>) {
+        ACBlocks.BREWERY.itemBlock?.register(registry)
         ACBlocks.FURNACE.itemBlock?.register(registry)
 
         ACItemPotion.register(registry)

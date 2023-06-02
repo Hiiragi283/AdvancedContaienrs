@@ -1,6 +1,7 @@
 
 ##    Blocks    ##
 
+tile.advanced_containers.brewery.name=発展型醸造台
 tile.advanced_containers.furnace.name=発展型かまど
 
 ##    CreativeTab    ##
@@ -9,8 +10,13 @@ itemGroup.advanced_containers.potion=スタック可能なポーション
 
 ##    GUI    ##
 
+gui.advanced_containers.brewery.name=発展型醸造台
 gui.advanced_containers.furnace.name=発展型かまど
 
 ##    Item    ##
 
 item.advanced_containers.potion.name=スタック可能な%s
+
+##    Tips    ##
+
+tips.advanced_containers.potion.0=クラフトでバニラポーションに変換可能，逆も同様

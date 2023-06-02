@@ -1,5 +1,6 @@
 package hiiragi283.advcont.init
 
+import hiiragi283.advcont.block.ACBlockBrewery
 import hiiragi283.advcont.block.ACBlockFurnace
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.color.BlockColors
@@ -10,17 +11,21 @@ import net.minecraftforge.registries.IForgeRegistry
 
 object ACBlocks : IACEntry<Block> {
 
+    val BREWERY = ACBlockBrewery
     val FURNACE = ACBlockFurnace
 
     override fun register(registry: IForgeRegistry<Block>) {
+        BREWERY.register(registry)
         FURNACE.register(registry)
     }
 
     override fun registerOreDict() {
+        BREWERY.registerOreDict()
         FURNACE.registerOreDict()
     }
 
     override fun registerRecipe() {
+        BREWERY.registerRecipe()
         FURNACE.registerRecipe()
     }
 
@@ -36,6 +41,7 @@ object ACBlocks : IACEntry<Block> {
 
     @SideOnly(Side.CLIENT)
     override fun registerModel() {
+        BREWERY.registerModel()
         FURNACE.registerModel()
     }
 

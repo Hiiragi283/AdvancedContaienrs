@@ -1,6 +1,7 @@
 
 ##    Blocks    ##
 
+tile.advanced_containers.brewery.name=Advanced Brewery
 tile.advanced_containers.furnace.name=Advanced Furnace
 
 ##    CreativeTab    ##
@@ -9,8 +10,13 @@ itemGroup.advanced_containers.potion=Stackable Potion
 
 ##    GUI    ##
 
+gui.advanced_containers.brewery.name=Advanced Brewery
 gui.advanced_containers.furnace.name=Advanced Furnace
 
 ##    Item    ##
 
 item.advanced_containers.potion.name=Stackable %s
+
+##    Tips    ##
+
+tips.advanced_containers.potion.0=Converted to Vanilla Potions by crafting, vice versa

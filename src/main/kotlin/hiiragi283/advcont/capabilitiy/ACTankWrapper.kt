@@ -18,40 +18,30 @@ class ACTankWrapper(private vararg val tanks: ACTank) : IFluidHandler, INBTSeria
 
     override fun getTankProperties(): Array<IFluidTankProperties> {
         val properties: MutableList<IFluidTankProperties> = mutableListOf()
-        for (tank in tanks) {
-            properties.add(tank.tankProperties[0])
+        tanks.forEach {
+            properties.add(it.tankProperties[0])
         }
         return properties.toTypedArray()
     }
 
     override fun fill(resource: FluidStack?, doFill: Boolean): Int {
-        var result = 0
-        for (tank in tanks) {
-            //搬入可能なtankに対してのみ実行する
-            if (tank.getIOType().canInput) {
-                val result1 = tank.fill(resource, false)
-                if (result1 > 0) {
-                    result = tank.fill(resource, doFill)
-                    break
-                }
-            }
+        val result1 = tanks.firstOrNull {
+            if (it.getIOType().canInput) {
+                val result1 = it.fill(resource, false)
+                result1 > 0
+            } else false
         }
-        return result
+        return result1?.fill(resource, doFill) ?: 0
     }
 
     override fun drain(resource: FluidStack?, doDrain: Boolean): FluidStack? {
-        var result: FluidStack? = null
-        for (tank in tanks) {
-            //搬出可能なtankに対してのみ実行する
-            if (tank.getIOType().canOutput) {
-                val result1 = tank.drain(resource, false)
-                if (result1 !== null) {
-                    result = tank.drain(resource, doDrain)
-                    break
-                }
-            }
+        val result1 = tanks.firstOrNull {
+            if (it.getIOType().canOutput) {
+                val result1 = it.drain(resource, false)
+                result1 !== null
+            } else false
         }
-        return result
+        return result1?.drain(resource, doDrain)
     }
 
     //最初に登録したtankを返す
@@ -61,8 +51,8 @@ class ACTankWrapper(private vararg val tanks: ACTank) : IFluidHandler, INBTSeria
 
     override fun serializeNBT(): NBTTagCompound {
         val tagList = NBTTagList()
-        for (tank in tanks) {
-            val stack = tank.fluid
+        tanks.forEach {
+            val stack = it.fluid
             NBTTagCompound().also { tag ->
                 stack?.writeToNBT(tag)
                 tagList.appendTag(tag)

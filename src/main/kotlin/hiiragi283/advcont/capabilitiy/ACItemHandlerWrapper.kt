@@ -19,9 +19,9 @@ class ACItemHandlerWrapper(vararg itemHandlers: ACItemHandler<*>) : IItemHandler
     private val pairs: MutableList<Pair<ACItemHandler<*>, Int>> = mutableListOf()
 
     init {
-        for (itemHandler in itemHandlers) {
-            for (slot in 0 until itemHandler.slots) {
-                pairs.add(itemHandler to slot)
+        itemHandlers.forEach {
+            for (slot in 0 until it.slots) {
+                pairs.add(it to slot)
             }
         }
     }
@@ -42,7 +42,7 @@ class ACItemHandlerWrapper(vararg itemHandlers: ACItemHandler<*>) : IItemHandler
 
     override fun getSlotLimit(slot: Int): Int = 64
 
-    fun getSlotHandler(slot: Int): Pair<ACItemHandler<*>, Int> = pairs[slot]
+    private fun getSlotHandler(slot: Int): Pair<ACItemHandler<*>, Int> = pairs[slot]
 
     //    Extraction    //
 

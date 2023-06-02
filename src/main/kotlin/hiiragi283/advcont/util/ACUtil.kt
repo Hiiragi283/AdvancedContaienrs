@@ -3,10 +3,13 @@
 package hiiragi283.advcont.util
 
 import hiiragi283.advcont.AdvancedContainers
+import hiiragi283.advcont.init.ACItems
 import net.minecraft.client.Minecraft
 import net.minecraft.command.ICommandSender
+import net.minecraft.init.Items
 import net.minecraft.item.EnumRarity
 import net.minecraft.item.ItemStack
+import net.minecraft.potion.PotionUtils
 import net.minecraft.util.NonNullList
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.common.IRarity
@@ -48,4 +51,13 @@ fun removeRegistryEntry(registry: IForgeRegistry<*>, registryName: ResourceLocat
 
 fun remove(registry: IForgeRegistry<*>, registryName: String) {
     removeRegistryEntry(registry, ResourceLocation(registryName))
+}
+
+fun convertPotion(stack: ItemStack): ItemStack {
+    val itemConverted = when (stack.item) {
+        ACItems.POTION -> Items.POTIONITEM
+        else -> ACItems.POTION
+    }
+    val result = ItemStack(itemConverted)
+    return PotionUtils.addPotionToItemStack(result, PotionUtils.getPotionFromItem(stack))
 }

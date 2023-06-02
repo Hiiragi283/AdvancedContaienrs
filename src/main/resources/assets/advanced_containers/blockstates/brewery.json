@@ -1,0 +1,10 @@
+{
+  "credit": "Tweaked by Hiiragi Russell Tsubasa",
+  "forge_marker": 1,
+  "defaults": {
+    "model": "advanced_containers:brewery"
+  },
+  "variants": {
+    "normal": [{}]
+  }
+}

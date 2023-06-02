@@ -55,13 +55,13 @@ abstract class ACTileBase : TileEntity() {
 
     //    CommonEvent    //
 
-    abstract fun onTileActivated(
+    open fun onTileActivated(
         world: World,
         pos: BlockPos,
         player: EntityPlayer,
         hand: EnumHand,
         facing: EnumFacing
-    ): Boolean
+    ): Boolean = false
 
     open fun onTilePlaced(
         world: World,

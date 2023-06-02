@@ -5,6 +5,7 @@ import hiiragi283.advcont.init.ACItems
 import hiiragi283.advcont.tile.ITileProvider
 import net.minecraft.block.Block
 import net.minecraft.item.Item
+import net.minecraft.item.crafting.IRecipe
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.event.ColorHandlerEvent
@@ -32,6 +33,8 @@ object ACEventHandler {
         if (tile is ITileProvider.Tank) event.addCapability(keyTank, tile.createTank())
     }
 
+    //    Registry    //
+
     @SubscribeEvent
     fun registerBlocks(event: RegistryEvent.Register<Block>) {
         ACBlocks.register(event.registry)
@@ -40,6 +43,12 @@ object ACEventHandler {
     @SubscribeEvent
     fun registerItems(event: RegistryEvent.Register<Item>) {
         ACItems.register(event.registry)
+    }
+
+    @SubscribeEvent
+    fun registerRecipe(event: RegistryEvent.Register<IRecipe>) {
+        val registry = event.registry
+        registry.register(RecipePotionStackable().setRegistryName(AdvancedContainers.MOD_ID, "potion"))
     }
 
     @SideOnly(Side.CLIENT)

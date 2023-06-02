@@ -1,16 +1,16 @@
 package hiiragi283.advcont.container
 
-import hiiragi283.advcont.tile.ACTileFurnace
+import hiiragi283.advcont.tile.ACTileBrewery
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.item.ItemStack
 import net.minecraftforge.items.SlotItemHandler
 
-class ACContainerFurnace(player: InventoryPlayer, tile: ACTileFurnace) : ACContainerBase<ACTileFurnace>(player, tile) {
+class ACContainerBrewery(player: InventoryPlayer, tile: ACTileBrewery) : ACContainerBase<ACTileBrewery>(player, tile) {
 
     init {
-        addSlotToContainer(SlotItemHandler(tile.fuel, 0, 56, 53))
-        addSlotToContainer(SlotItemHandler(tile.input, 0, 56, 17))
+        addSlotToContainer(SlotItemHandler(tile.input, 0, 56, 53))
+        addSlotToContainer(SlotItemHandler(tile.ingredient, 0, 56, 17))
         addSlotToContainer(SlotItemHandlerOutput(tile.output, 0, 116, 35))
         addPlayerInventory(player, 84)
     }
@@ -22,7 +22,7 @@ class ACContainerFurnace(player: InventoryPlayer, tile: ACTileFurnace) : ACConta
             val stackSlot = slot.stack
             stack = stackSlot.copy()
             when (index) {
-                //fuel, input, output -> inventory, hotbar
+                //ingredient, input, output -> inventory, hotbar
                 in 0..2 -> if (!mergeItemStack(
                         stackSlot,
                         tile.inventory.slots,

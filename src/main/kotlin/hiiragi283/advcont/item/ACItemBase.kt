@@ -5,15 +5,18 @@ import hiiragi283.advcont.init.IACEntry
 import hiiragi283.advcont.util.ModelUtil
 import net.minecraft.client.renderer.color.BlockColors
 import net.minecraft.client.renderer.color.ItemColors
+import net.minecraft.client.resources.I18n
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.NonNullList
+import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import net.minecraftforge.registries.IForgeRegistry
 
-abstract class ACItemBase(ID: String, private var maxMeta: Int) : Item(), IACEntry<Item> {
+abstract class ACItemBase(ID: String, private var maxMeta: Int, private val maxTips: Int) : Item(), IACEntry<Item> {
 
     init {
         setRegistryName(AdvancedContainers.MOD_ID, ID)
@@ -29,6 +32,19 @@ abstract class ACItemBase(ID: String, private var maxMeta: Int) : Item(), IACEnt
 
     override fun getTranslationKey(stack: ItemStack): String =
         super.getTranslationKey() + if (maxMeta == 0) "" else ".${stack.metadata}"
+
+    //    Client    //
+
+    @SideOnly(Side.CLIENT)
+    override fun addInformation(stack: ItemStack, world: World?, tooltip: MutableList<String>, flag: ITooltipFlag) {
+        val path = stack.item.registryName!!.path
+        if (maxTips != -1) {
+            tooltip.add("§e=== Info ===")
+            for (i in 0..maxTips) {
+                tooltip.add(I18n.format("tips.${AdvancedContainers.MOD_ID}.${path}.$i"))
+            }
+        }
+    }
 
     @SideOnly(Side.CLIENT)
     override fun getSubItems(tab: CreativeTabs, subItems: NonNullList<ItemStack>) {
