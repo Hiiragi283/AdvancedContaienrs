@@ -48,18 +48,17 @@ object ACItemPotion : ACItemBase("potion", 0, 0) {
     }
 
     override fun onItemUseFinish(stack: ItemStack, world: World, entityLiving: EntityLivingBase): ItemStack {
-        if (!world.isRemote) {
-            PotionUtils.getEffectsFromStack(stack).forEach {
-                //即時効果の場合は付与方法を変更
-                if (it.potion.isInstant) {
-                    it.potion.affectEntity(entityLiving, entityLiving, entityLiving, it.amplifier, 1.0)
-                } else {
-                    entityLiving.addPotionEffect(PotionEffect(it))
-                }
+        if (world.isRemote) return stack
+        PotionUtils.getEffectsFromStack(stack).forEach {
+            //即時効果の場合は付与方法を変更
+            if (it.potion.isInstant) {
+                it.potion.affectEntity(entityLiving, entityLiving, entityLiving, it.amplifier, 1.0)
+            } else {
+                entityLiving.addPotionEffect(PotionEffect(it))
             }
-            //空のビンをその場にドロップする
-            dropItem(world, entityLiving, ItemStack(Items.GLASS_BOTTLE))
         }
+        //空のビンをその場にドロップする
+        dropItem(world, entityLiving, ItemStack(Items.GLASS_BOTTLE))
         //ポーションを消費する
         stack.shrink(1)
         return stack
@@ -70,6 +69,7 @@ object ACItemPotion : ACItemBase("potion", 0, 0) {
     @SideOnly(Side.CLIENT)
     override fun addInformation(stack: ItemStack, world: World?, tooltip: MutableList<String>, flag: ITooltipFlag) {
         PotionUtils.addPotionTooltip(stack, tooltip, 1.0f)
+        super.addInformation(stack, world, tooltip, flag)
     }
 
     @SideOnly(Side.CLIENT)

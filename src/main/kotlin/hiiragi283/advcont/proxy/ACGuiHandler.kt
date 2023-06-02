@@ -1,9 +1,12 @@
 package hiiragi283.advcont.proxy
 
+import hiiragi283.advcont.client.gui.ACGuiAnvil
 import hiiragi283.advcont.client.gui.ACGuiBrewery
 import hiiragi283.advcont.client.gui.ACGuiFurnace
+import hiiragi283.advcont.container.ACContainerAnvil
 import hiiragi283.advcont.container.ACContainerBrewery
 import hiiragi283.advcont.container.ACContainerFurnace
+import hiiragi283.advcont.tile.ACTileAnvil
 import hiiragi283.advcont.tile.ACTileBrewery
 import hiiragi283.advcont.tile.ACTileFurnace
 import net.minecraft.client.gui.inventory.GuiContainer
@@ -20,6 +23,7 @@ object ACGuiHandler : IGuiHandler {
         if (ID == 0) {
             world.getTileEntity(BlockPos(x, y, z))?.let {
                 when (it) {
+                    is ACTileAnvil -> container = ACContainerAnvil(player.inventory, it)
                     is ACTileBrewery -> container = ACContainerBrewery(player.inventory, it)
                     is ACTileFurnace -> container = ACContainerFurnace(player.inventory, it)
                     else -> {}
@@ -34,6 +38,7 @@ object ACGuiHandler : IGuiHandler {
         if (ID == 0) {
             world.getTileEntity(BlockPos(x, y, z))?.let {
                 when (it) {
+                    is ACTileAnvil -> gui = ACGuiAnvil(player.inventory, it)
                     is ACTileBrewery -> gui = ACGuiBrewery(player.inventory, it)
                     is ACTileFurnace -> gui = ACGuiFurnace(player.inventory, it)
                     else -> {}

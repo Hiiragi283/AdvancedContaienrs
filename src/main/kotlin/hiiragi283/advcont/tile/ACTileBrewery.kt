@@ -71,9 +71,8 @@ class ACTileBrewery : ACTileBase.Tickable(20 * 10), ITileContainer, ITileProvide
         return true
     }
 
-    override fun onTileRemoved(world: World, pos: BlockPos, state: IBlockState) {
+    override fun onTileRemoved(world: World, pos: BlockPos, state: IBlockState): Unit =
         dropInventory(world, pos, inventory)
-    }
 
     //    Tickable    //
 

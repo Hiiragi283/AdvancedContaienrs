@@ -1,11 +1,9 @@
 package hiiragi283.advcont.block
 
-import hiiragi283.advcont.tile.ACTileFurnace
-import hiiragi283.advcont.util.toBoolean
-import hiiragi283.advcont.util.toInt
+import hiiragi283.advcont.tile.ACTileAnvil
 import net.minecraft.block.BlockHorizontal
-import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
+import net.minecraft.block.state.BlockFaceShape
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
 import net.minecraft.creativetab.CreativeTabs
@@ -14,30 +12,53 @@ import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.Ingredient
 import net.minecraft.util.*
+import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
+import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 
-object ACBlockFurnace :
-    ACBlockContainer.Holdable<ACTileFurnace>("furnace", Material.ROCK, ACTileFurnace::class.java, 0) {
+object ACBlockAnvil : ACBlockContainer<ACTileAnvil>("anvil", Material.ANVIL, ACTileAnvil::class.java, 0) {
+
+    private val BOX_X: AxisAlignedBB = AxisAlignedBB(0.0, 0.0, 0.125, 1.0, 1.0, 0.875)
+    private val BOX_Z: AxisAlignedBB = AxisAlignedBB(0.125, 0.0, 0.0, 0.875, 1.0, 1.0)
 
     init {
-        blockHardness = 3.5f
+        blockHardness = 0.5f
         creativeTab = CreativeTabs.DECORATIONS
         defaultState = blockState.baseState.withProperty(BlockHorizontal.FACING, EnumFacing.NORTH)
-            .withProperty(ACProperty.ACTIVE, false)
-        soundType = SoundType.STONE
     }
+
+    //    General    //
+
+    @Deprecated(
+        "Deprecated in Java",
+        ReplaceWith("BlockFaceShape.UNDEFINED", "net.minecraft.block.state.BlockFaceShape")
+    )
+    override fun getBlockFaceShape(
+        worldIn: IBlockAccess,
+        state: IBlockState,
+        pos: BlockPos,
+        face: EnumFacing
+    ): BlockFaceShape = BlockFaceShape.UNDEFINED
+
+    @Deprecated("Deprecated in Java")
+    override fun getBoundingBox(state: IBlockState, source: IBlockAccess, pos: BlockPos): AxisAlignedBB =
+        if (state.getValue(BlockHorizontal.FACING).axis == EnumFacing.Axis.X) BOX_X else BOX_Z
+
+    @Deprecated("Deprecated in Java", ReplaceWith("false"))
+    override fun isFullBlock(state: IBlockState) = false
+
+    @Deprecated("Deprecated in Java", ReplaceWith("false"))
+    override fun isOpaqueCube(state: IBlockState) = false
 
     //    BlockState    //
 
-    override fun createBlockState(): BlockStateContainer =
-        BlockStateContainer(this, BlockHorizontal.FACING, ACProperty.ACTIVE)
+    override fun createBlockState(): BlockStateContainer = BlockStateContainer(this, BlockHorizontal.FACING)
 
-    override fun getMetaFromState(state: IBlockState): Int =
-        getFacing(state, BlockHorizontal.FACING).index + getBoolean(state).toInt() * 4
+    override fun getMetaFromState(state: IBlockState): Int = getFacing(state, BlockHorizontal.FACING).index
 
     override fun getStateForPlacement(
         world: World,
@@ -58,7 +79,6 @@ object ACBlockFurnace :
         var facing = EnumFacing.byIndex(meta % 6)
         if (facing.axis == EnumFacing.Axis.Y) facing = EnumFacing.NORTH
         return this.defaultState.withProperty(BlockHorizontal.FACING, facing)
-            .withProperty(ACProperty.ACTIVE, (meta / 4).toBoolean())
     }
 
     @Deprecated("Deprecated in Java")
@@ -73,6 +93,20 @@ object ACBlockFurnace :
         return setFacing(state, facing, BlockHorizontal.FACING)
     }
 
+    //    Client    //
+
+    @SideOnly(Side.CLIENT)
+    override fun getRenderLayer(): BlockRenderLayer = BlockRenderLayer.CUTOUT
+
+    @Deprecated("Deprecated in Java", ReplaceWith("true"))
+    @SideOnly(Side.CLIENT)
+    override fun shouldSideBeRendered(
+        blockState: IBlockState,
+        blockAccess: IBlockAccess,
+        pos: BlockPos,
+        side: EnumFacing
+    ): Boolean = true
+
     //    IACEntry    //
 
     @SideOnly(Side.CLIENT)
@@ -85,12 +119,12 @@ object ACBlockFurnace :
             registryName!!,
             registryName!!,
             ItemStack(this),
-            Ingredient.fromStacks(ItemStack(Blocks.FURNACE))
+            Ingredient.fromStacks(ItemStack(Blocks.ANVIL))
         )
         GameRegistry.addShapelessRecipe(
-            ResourceLocation("furnace_alt"),
-            ResourceLocation("furnace_alt"),
-            ItemStack(Blocks.FURNACE),
+            ResourceLocation("anvil_alt"),
+            ResourceLocation("anvil_alt"),
+            ItemStack(Blocks.ANVIL),
             Ingredient.fromStacks(ItemStack(this))
         )
     }

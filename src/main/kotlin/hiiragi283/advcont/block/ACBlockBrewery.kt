@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 
-object ACBlockBrewery : ACBlockContainer<ACTileBrewery>("brewery", Material.IRON, ACTileBrewery::class.java, -1) {
+object ACBlockBrewery : ACBlockContainer<ACTileBrewery>("brewery", Material.IRON, ACTileBrewery::class.java, 0) {
 
     init {
         blockHardness = 0.5f

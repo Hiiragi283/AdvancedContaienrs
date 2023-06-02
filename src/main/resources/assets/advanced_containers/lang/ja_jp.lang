@@ -1,6 +1,7 @@
 
 ##    Blocks    ##
 
+tile.advanced_containers.anvil.name=発展型金床
 tile.advanced_containers.brewery.name=発展型醸造台
 tile.advanced_containers.furnace.name=発展型かまど
 
@@ -10,6 +11,7 @@ itemGroup.advanced_containers.potion=スタック可能なポーション
 
 ##    GUI    ##
 
+gui.advanced_containers.anvil.name=発展型金床
 gui.advanced_containers.brewery.name=発展型醸造台
 gui.advanced_containers.furnace.name=発展型かまど
 
@@ -19,4 +21,7 @@ item.advanced_containers.potion.name=スタック可能な%s
 
 ##    Tips    ##
 
+tips.advanced_containers.anvil.0=道具を最大まで修復する代わりに素材が3つ必要
+tips.advanced_containers.brewery.0=かまどのように自動化でき，スタック可能なポーションを生産する
+tips.advanced_containers.furnace.0=10秒ごとに稼働し，燃焼時間の余りを保存する
 tips.advanced_containers.potion.0=クラフトでバニラポーションに変換可能，逆も同様
