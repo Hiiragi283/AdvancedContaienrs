@@ -41,28 +41,28 @@ object ItemRingBeacon : ACItemBase("beacon_ring", 0, -1), IBauble {
     override fun initCapabilities(stack: ItemStack, nbt: NBTTagCompound?): ICapabilityProvider =
         BeaconCapabilityProvider(stack)
 
-    class BeaconCapabilityProvider(val stack: ItemStack) : ICapabilityProvider {
+    class BeaconCapabilityProvider(private val ring: ItemStack) : ICapabilityProvider {
 
         override fun hasCapability(capability: Capability<*>, facing: EnumFacing?): Boolean =
             capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY
 
         override fun <T : Any> getCapability(capability: Capability<T>, facing: EnumFacing?): T? =
             if (hasCapability(capability, facing)) {
-                CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(BeaconRingHandler(stack))
+                CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(BeaconRingHandler(ring))
             } else null
 
     }
 
-    class BeaconRingHandler(val stack: ItemStack) : ItemStackHandler(1) {
+    class BeaconRingHandler(private val ring: ItemStack) : ItemStackHandler(1) {
 
         init {
-            setStackInSlot(0, stack)
+            deserializeNBT(ring.tagCompound?.getCompoundTag("inventory") ?: NBTTagCompound())
         }
 
         fun onClosed() {
-            val tag = stack.tagCompound ?: NBTTagCompound()
+            val tag = ring.tagCompound ?: NBTTagCompound()
             tag.setTag("inventory", serializeNBT())
-            stack.tagCompound = tag
+            ring.tagCompound = tag
         }
 
     }

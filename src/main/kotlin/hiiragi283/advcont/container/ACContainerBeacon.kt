@@ -4,20 +4,12 @@ import hiiragi283.advcont.item.ItemRingBeacon
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumHand
-import net.minecraftforge.items.CapabilityItemHandler
-import net.minecraftforge.items.IItemHandler
 import net.minecraftforge.items.SlotItemHandler
 
 class ACContainerBeacon(val player: EntityPlayer) : ACContainerBase() {
 
     private val ring: ItemStack = player.getHeldItem(EnumHand.MAIN_HAND)
-    private val handler: ItemRingBeacon.BeaconRingHandler = getHandler(ring)
-
-    private fun getHandler(stack: ItemStack): ItemRingBeacon.BeaconRingHandler {
-        val handler: IItemHandler? = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)
-        return if (handler !== null && handler is ItemRingBeacon.BeaconRingHandler) handler
-        else ItemRingBeacon.BeaconRingHandler(ItemStack.EMPTY)
-    }
+    private val handler = ItemRingBeacon.BeaconRingHandler(ring)
 
     init {
         addSlotToContainer(SlotItemHandler(handler, 0, 27, 47))
