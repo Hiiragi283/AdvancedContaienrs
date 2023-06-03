@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fluids.Fluid
 import net.minecraftforge.fluids.FluidStack
 
-abstract class ACGuiBase<T : ACTileBase>(private val container: ACContainerBase<T>) : GuiContainer(container) {
+abstract class ACGuiBase<T : ACTileBase>(private val container: ACContainerBase.Tile<T>) : GuiContainer(container) {
 
     abstract val background: ResourceLocation
 

@@ -90,6 +90,7 @@ dependencies {
     // Example deobf dependency
     // compileOnly rfg.deobf("curse.maven:endercore-231868:2972849:")
 
+    implementation(rfg.deobf("curse.maven:baubles-227083:2518667"))
     implementation(rfg.deobf("curse.maven:had-enough-items-557549:4451828"))
     implementation(rfg.deobf("curse.maven:the-one-probe-245211:2667280"))
 

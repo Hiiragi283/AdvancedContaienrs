@@ -1,6 +1,7 @@
 package hiiragi283.advcont.init
 
 import hiiragi283.advcont.item.ACItemPotion
+import hiiragi283.advcont.item.ItemRingBeacon
 import net.minecraft.client.renderer.color.BlockColors
 import net.minecraft.client.renderer.color.ItemColors
 import net.minecraft.item.Item
@@ -10,6 +11,7 @@ import net.minecraftforge.registries.IForgeRegistry
 
 object ACItems : IACEntry<Item> {
 
+    val BEACON_RING = ItemRingBeacon
     val POTION = ACItemPotion
 
     override fun register(registry: IForgeRegistry<Item>) {
@@ -17,15 +19,18 @@ object ACItems : IACEntry<Item> {
         ACBlocks.BREWERY.itemBlock?.register(registry)
         ACBlocks.FURNACE.itemBlock?.register(registry)
 
-        ACItemPotion.register(registry)
+        BEACON_RING.register(registry)
+        POTION.register(registry)
     }
 
     override fun registerOreDict() {
-        ACItemPotion.registerOreDict()
+        BEACON_RING.registerOreDict()
+        POTION.registerOreDict()
     }
 
     override fun registerRecipe() {
-        ACItemPotion.registerRecipe()
+        BEACON_RING.registerRecipe()
+        POTION.registerRecipe()
     }
 
     @SideOnly(Side.CLIENT)
@@ -40,7 +45,8 @@ object ACItems : IACEntry<Item> {
 
     @SideOnly(Side.CLIENT)
     override fun registerModel() {
-        ACItemPotion.registerModel()
+        BEACON_RING.registerModel()
+        POTION.registerModel()
     }
 
 }

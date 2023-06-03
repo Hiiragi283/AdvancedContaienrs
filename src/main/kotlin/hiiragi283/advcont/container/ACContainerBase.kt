@@ -6,7 +6,7 @@ import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.inventory.Container
 import net.minecraft.inventory.Slot
 
-abstract class ACContainerBase<T : ACTileBase>(val player: InventoryPlayer, val tile: T) : Container() {
+abstract class ACContainerBase : Container() {
 
     fun addPlayerInventory(player: InventoryPlayer, posY: Int) {
         //プレイヤーのインベントリのスロットを設定
@@ -22,5 +22,7 @@ abstract class ACContainerBase<T : ACTileBase>(val player: InventoryPlayer, val 
     }
 
     override fun canInteractWith(player: EntityPlayer): Boolean = true
+
+    abstract class Tile<T : ACTileBase>(val player: InventoryPlayer, val tile: T) : ACContainerBase()
 
 }

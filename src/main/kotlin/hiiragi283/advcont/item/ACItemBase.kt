@@ -8,9 +8,11 @@ import net.minecraft.client.renderer.color.ItemColors
 import net.minecraft.client.resources.I18n
 import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.NonNullList
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
@@ -33,6 +35,9 @@ abstract class ACItemBase(ID: String, private var maxMeta: Int, private val maxT
     override fun getTranslationKey(stack: ItemStack): String =
         super.getTranslationKey() + if (maxMeta == 0) "" else ".${stack.metadata}"
 
+    fun openGui(player: EntityPlayer, world: World, pos: BlockPos) {
+        player.openGui(AdvancedContainers.Instance, 1, world, pos.x, pos.y, pos.z)
+    }
     //    Client    //
 
     @SideOnly(Side.CLIENT)

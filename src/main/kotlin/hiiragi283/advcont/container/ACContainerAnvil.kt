@@ -7,7 +7,7 @@ import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.item.ItemStack
 import net.minecraftforge.items.SlotItemHandler
 
-class ACContainerAnvil(player: InventoryPlayer, tile: ACTileAnvil) : ACContainerBase<ACTileAnvil>(player, tile) {
+class ACContainerAnvil(player: InventoryPlayer, tile: ACTileAnvil) : ACContainerBase.Tile<ACTileAnvil>(player, tile) {
 
     init {
         addSlotToContainer(object : SlotItemHandler(tile.input, 0, 27, 47) {

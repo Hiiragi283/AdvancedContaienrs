@@ -6,7 +6,8 @@ import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.item.ItemStack
 import net.minecraftforge.items.SlotItemHandler
 
-class ACContainerBrewery(player: InventoryPlayer, tile: ACTileBrewery) : ACContainerBase<ACTileBrewery>(player, tile) {
+class ACContainerBrewery(player: InventoryPlayer, tile: ACTileBrewery) :
+    ACContainerBase.Tile<ACTileBrewery>(player, tile) {
 
     init {
         addSlotToContainer(SlotItemHandler(tile.input, 0, 56, 53))

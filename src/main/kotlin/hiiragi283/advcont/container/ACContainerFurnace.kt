@@ -6,7 +6,8 @@ import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.item.ItemStack
 import net.minecraftforge.items.SlotItemHandler
 
-class ACContainerFurnace(player: InventoryPlayer, tile: ACTileFurnace) : ACContainerBase<ACTileFurnace>(player, tile) {
+class ACContainerFurnace(player: InventoryPlayer, tile: ACTileFurnace) :
+    ACContainerBase.Tile<ACTileFurnace>(player, tile) {
 
     init {
         addSlotToContainer(SlotItemHandler(tile.fuel, 0, 56, 53))
