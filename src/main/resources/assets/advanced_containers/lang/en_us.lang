@@ -7,16 +7,25 @@ tile.advanced_containers.furnace.name=Advanced Furnace
 
 ##    CreativeTab    ##
 
+itemGroup.advanced_containers.main=Advanced Containers
 itemGroup.advanced_containers.potion=Stackable Potion
 
 ##    GUI    ##
 
 gui.advanced_containers.anvil.name=Advanced Anvil
+gui.advanced_containers.beacon_ring.name=Beacon Ring
 gui.advanced_containers.brewery.name=Advanced Brewery
 gui.advanced_containers.furnace.name=Advanced Furnace
 
 ##    Item    ##
 
+item.advanced_containers.beacon_augment.0.name=Speed Drink
+item.advanced_containers.beacon_augment.1.name=Haste Pickaxe
+item.advanced_containers.beacon_augment.2.name=Resistance Shield
+item.advanced_containers.beacon_augment.3.name=Jump Boots
+item.advanced_containers.beacon_augment.4.name=Sword of Strength
+item.advanced_containers.beacon_augment.5.name=Regeneration Heart
+item.advanced_containers.beacon_ring.name=Beacon Ring
 item.advanced_containers.potion.name=Stackable %s
 
 ##    Tips    ##

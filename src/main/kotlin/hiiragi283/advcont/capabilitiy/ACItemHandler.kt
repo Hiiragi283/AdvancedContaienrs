@@ -2,14 +2,10 @@ package hiiragi283.advcont.capabilitiy
 
 import hiiragi283.advcont.tile.ACTileBase
 import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NBTTagCompound
 import net.minecraftforge.items.ItemStackHandler
 
-open class ACItemHandler<T : ACTileBase>(slots: Int, val tile: T) : ItemStackHandler(slots),
-    ICapabilityIO<ACItemHandler<*>> {
-
-    override fun onContentsChanged(slot: Int) {
-        tile.markDirty()
-    }
+sealed class ACItemHandler(slots: Int) : ItemStackHandler(slots), ICapabilityIO<ACItemHandler> {
 
     //    ICapabilityIO    //
 
@@ -17,7 +13,7 @@ open class ACItemHandler<T : ACTileBase>(slots: Int, val tile: T) : ItemStackHan
 
     override fun getIOType(): EnumIOType = ioType
 
-    override fun setIOType(type: EnumIOType): ACItemHandler<T> = also { ioType = type }
+    override fun setIOType(type: EnumIOType): ACItemHandler = also { ioType = type }
 
     //    Custom    //
 
@@ -37,4 +33,31 @@ open class ACItemHandler<T : ACTileBase>(slots: Int, val tile: T) : ItemStackHan
             setStackInSlot(slot, ItemStack.EMPTY)
         }
     }
+
+    //    For ItemStack    //
+
+    class Item(slots: Int, private val parent: ItemStack) : ACItemHandler(slots) {
+
+        init {
+            deserializeNBT(parent.tagCompound?.getCompoundTag("inventory") ?: NBTTagCompound())
+        }
+
+        fun onClosed() {
+            val tag = parent.tagCompound ?: NBTTagCompound()
+            tag.setTag("inventory", serializeNBT())
+            parent.tagCompound = tag
+        }
+
+    }
+
+    //    For TileEntity    //
+
+    open class Tile<T : ACTileBase>(slots: Int, val tile: T) : ACItemHandler(slots) {
+
+        override fun onContentsChanged(slot: Int): Unit = tile.markDirty()
+
+        override fun setIOType(type: EnumIOType): Tile<T> = also { ioType = type }
+
+    }
+
 }

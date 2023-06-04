@@ -13,10 +13,10 @@ import net.minecraftforge.items.IItemHandlerModifiable
  * Thanks to SkyTheory!
  */
 
-class ACItemHandlerWrapper(vararg itemHandlers: ACItemHandler<*>) : IItemHandler, IItemHandlerModifiable,
+class ACItemHandlerWrapper(vararg itemHandlers: ACItemHandler) : IItemHandler, IItemHandlerModifiable,
     INBTSerializable<NBTTagCompound> {
 
-    private val pairs: MutableList<Pair<ACItemHandler<*>, Int>> = mutableListOf()
+    private val pairs: MutableList<Pair<ACItemHandler, Int>> = mutableListOf()
 
     init {
         itemHandlers.forEach {
@@ -42,7 +42,7 @@ class ACItemHandlerWrapper(vararg itemHandlers: ACItemHandler<*>) : IItemHandler
 
     override fun getSlotLimit(slot: Int): Int = 64
 
-    private fun getSlotHandler(slot: Int): Pair<ACItemHandler<*>, Int> = pairs[slot]
+    private fun getSlotHandler(slot: Int): Pair<ACItemHandler, Int> = pairs[slot]
 
     //    Extraction    //
 

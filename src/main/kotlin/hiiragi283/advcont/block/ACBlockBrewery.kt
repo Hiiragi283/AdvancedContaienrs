@@ -4,7 +4,6 @@ import hiiragi283.advcont.tile.ACTileBrewery
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.BlockFaceShape
 import net.minecraft.block.state.IBlockState
-import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.Ingredient
@@ -21,7 +20,6 @@ object ACBlockBrewery : ACBlockContainer<ACTileBrewery>("brewery", Material.IRON
 
     init {
         blockHardness = 0.5f
-        creativeTab = CreativeTabs.BREWING
     }
 
     //    General    //

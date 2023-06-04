@@ -3,32 +3,31 @@ package hiiragi283.advcont.item
 import baubles.api.BaubleType
 import baubles.api.BaublesApi
 import baubles.api.IBauble
+import hiiragi283.advcont.capabilitiy.ACItemHandler
 import hiiragi283.advcont.util.CraftingBuilder
-import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.client.resources.I18n
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.init.SoundEvents
 import net.minecraft.item.EnumRarity
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.potion.Potion
 import net.minecraft.util.ActionResult
 import net.minecraft.util.EnumActionResult
-import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
+import net.minecraft.util.text.TextFormatting
 import net.minecraft.world.World
 import net.minecraftforge.common.IRarity
-import net.minecraftforge.common.capabilities.Capability
-import net.minecraftforge.common.capabilities.ICapabilityProvider
 import net.minecraftforge.fml.common.Optional
-import net.minecraftforge.items.CapabilityItemHandler
-import net.minecraftforge.items.ItemStackHandler
+import net.minecraftforge.fml.relauncher.Side
+import net.minecraftforge.fml.relauncher.SideOnly
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles")
-object ItemRingBeacon : ACItemBase("beacon_ring", 0, -1), IBauble {
+object ACItemBeaconRing : ACItemBase("beacon_ring", 0, -1), IBauble {
 
     init {
-        creativeTab = CreativeTabs.MISC
         maxStackSize = 1
     }
 
@@ -36,35 +35,16 @@ object ItemRingBeacon : ACItemBase("beacon_ring", 0, -1), IBauble {
 
     override fun getForgeRarity(stack: ItemStack): IRarity = EnumRarity.EPIC
 
-    //    Capability    //
+    //    Client    //
 
-    override fun initCapabilities(stack: ItemStack, nbt: NBTTagCompound?): ICapabilityProvider =
-        BeaconCapabilityProvider(stack)
-
-    class BeaconCapabilityProvider(private val ring: ItemStack) : ICapabilityProvider {
-
-        override fun hasCapability(capability: Capability<*>, facing: EnumFacing?): Boolean =
-            capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY
-
-        override fun <T : Any> getCapability(capability: Capability<T>, facing: EnumFacing?): T? =
-            if (hasCapability(capability, facing)) {
-                CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(BeaconRingHandler(ring))
-            } else null
-
-    }
-
-    class BeaconRingHandler(private val ring: ItemStack) : ItemStackHandler(1) {
-
-        init {
-            deserializeNBT(ring.tagCompound?.getCompoundTag("inventory") ?: NBTTagCompound())
-        }
-
-        fun onClosed() {
-            val tag = ring.tagCompound ?: NBTTagCompound()
-            tag.setTag("inventory", serializeNBT())
-            ring.tagCompound = tag
-        }
-
+    @SideOnly(Side.CLIENT)
+    override fun addInformation(stack: ItemStack, world: World?, tooltip: MutableList<String>, flag: ITooltipFlag) {
+        super.addInformation(stack, world, tooltip, flag)
+        tooltip.add(I18n.format("=== Effect ==="))
+        tooltip.add(
+            I18n.format(
+                TextFormatting.AQUA.toString() + getPotion(stack)?.name?.trim()?.let { I18n.format(it) })
+        )
     }
 
     //    Event    //
@@ -116,7 +96,17 @@ object ItemRingBeacon : ACItemBase("beacon_ring", 0, -1), IBauble {
     }
 
     override fun onWornTick(stack: ItemStack, player: EntityLivingBase) {
+        val handler = ACItemHandler.Item(1, stack)
+        val augment = handler.getStackInSlot(0)
+        val item = augment.item
+        if (item is IBeaconAugment) item.getEffect(augment)?.let { player.addPotionEffect(it) }
+    }
 
+    private fun getPotion(stack: ItemStack): Potion? {
+        val handler = ACItemHandler.Item(1, stack)
+        val augment = handler.getStackInSlot(0)
+        val item = augment.item
+        return if (item is IBeaconAugment) item.getPotion(augment) else null
     }
 
 }

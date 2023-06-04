@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation
 class ACGuiBeacon(val player: EntityPlayer) : GuiContainer(ACContainerBeacon(player)) {
 
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
-        val title = I18n.format("")
+        val title = I18n.format("gui.advanced_containers.beacon_ring.name")
         fontRenderer.drawString(title, xSize / 2 - fontRenderer.getStringWidth(title) / 2, 6, 0x404040)
         fontRenderer.drawString(player.displayName.unformattedText, 8, ySize - 96 + 2, 0x404040)
     }

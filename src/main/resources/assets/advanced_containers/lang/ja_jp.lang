@@ -7,16 +7,25 @@ tile.advanced_containers.furnace.name=発展型かまど
 
 ##    CreativeTab    ##
 
+itemGroup.advanced_containers.main=Advanced Containers
 itemGroup.advanced_containers.potion=スタック可能なポーション
 
 ##    GUI    ##
 
 gui.advanced_containers.anvil.name=発展型金床
+gui.advanced_containers.beacon_ring.name=ビーコンの指輪
 gui.advanced_containers.brewery.name=発展型醸造台
 gui.advanced_containers.furnace.name=発展型かまど
 
 ##    Item    ##
 
+item.advanced_containers.beacon_augment.0.name=加速ドリンク
+item.advanced_containers.beacon_augment.1.name=爆速ピッケル
+item.advanced_containers.beacon_augment.2.name=耐久シールド
+item.advanced_containers.beacon_augment.3.name=ジャンプブーツ
+item.advanced_containers.beacon_augment.4.name=力の剣
+item.advanced_containers.beacon_augment.5.name=再生ハート
+item.advanced_containers.beacon_ring.name=ビーコンの指輪
 item.advanced_containers.potion.name=スタック可能な%s
 
 ##    Tips    ##

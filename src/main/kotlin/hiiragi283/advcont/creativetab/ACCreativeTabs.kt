@@ -11,6 +11,12 @@ import net.minecraftforge.fml.relauncher.SideOnly
 
 object ACCreativeTabs {
 
+    object MAIN : CreativeTabs("${AdvancedContainers.MOD_ID}.main") {
+
+        @SideOnly(Side.CLIENT)
+        override fun createIcon(): ItemStack = ItemStack(ACItems.BEACON_RING)
+    }
+
     object POTION : CreativeTabs("${AdvancedContainers.MOD_ID}.potion") {
 
         @SideOnly(Side.CLIENT)

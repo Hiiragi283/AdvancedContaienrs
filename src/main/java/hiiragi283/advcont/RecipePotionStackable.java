@@ -19,6 +19,7 @@ public class RecipePotionStackable extends IForgeRegistryEntry.Impl<IRecipe> imp
     @Override
     public boolean matches(@NotNull InventoryCrafting inv, World worldIn) {
         int countPotion = 0;
+        int countEmpty = 0;
         for (int i = 0; i < 8; i++) {
             ItemStack stack = inv.getStackInSlot(i);
             if (!stack.isEmpty()) {
@@ -27,9 +28,11 @@ public class RecipePotionStackable extends IForgeRegistryEntry.Impl<IRecipe> imp
                     countPotion++;
                     POTION = stack;
                 }
+            } else {
+                countEmpty++;
             }
         }
-        return countPotion == 1;
+        return countPotion == 1 && countEmpty == 8;
     }
 
     @NotNull

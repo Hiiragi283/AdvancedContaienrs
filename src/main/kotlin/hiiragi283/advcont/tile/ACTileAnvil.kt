@@ -19,16 +19,16 @@ import net.minecraftforge.items.IItemHandler
 
 class ACTileAnvil : ACTileBase(), ITileContainer, ITileProvider.Inventory {
 
-    lateinit var input: ACItemHandler<ACTileAnvil>
-    lateinit var ingredient: ACItemHandler<ACTileAnvil>
-    lateinit var output: ACItemHandler<ACTileAnvil>
+    lateinit var input: ACItemHandler.Tile<ACTileAnvil>
+    lateinit var ingredient: ACItemHandler.Tile<ACTileAnvil>
+    lateinit var output: ACItemHandler.Tile<ACTileAnvil>
 
     //    Capability    //
 
     override fun createInventory(): ACCapabilityProvider<IItemHandler> {
-        input = ACItemHandler(1, this).setIOType(EnumIOType.CATALYST)
-        ingredient = ACItemHandler(1, this).setIOType(EnumIOType.CATALYST)
-        output = ACItemHandler(1, this).setIOType(EnumIOType.CATALYST)
+        input = ACItemHandler.Tile(1, this).setIOType(EnumIOType.CATALYST)
+        ingredient = ACItemHandler.Tile(1, this).setIOType(EnumIOType.CATALYST)
+        output = ACItemHandler.Tile(1, this).setIOType(EnumIOType.CATALYST)
         inventory = ACItemHandlerWrapper(input, ingredient, output)
         return ACCapabilityProvider(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, inventory, inventory)
     }

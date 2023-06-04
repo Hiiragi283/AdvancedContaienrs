@@ -24,15 +24,15 @@ import net.minecraftforge.items.IItemHandler
 
 class ACTileBrewery : ACTileBase.Tickable(20 * 10), ITileContainer, ITileProvider.Inventory {
 
-    lateinit var input: ACItemHandler<ACTileBrewery>
-    lateinit var ingredient: ACItemHandler<ACTileBrewery>
-    lateinit var output: ACItemHandler<ACTileBrewery>
+    lateinit var input: ACItemHandler.Tile<ACTileBrewery>
+    lateinit var ingredient: ACItemHandler.Tile<ACTileBrewery>
+    lateinit var output: ACItemHandler.Tile<ACTileBrewery>
 
     //    Capability    //
 
     override fun createInventory(): ACCapabilityProvider<IItemHandler> {
 
-        input = object : ACItemHandler<ACTileBrewery>(1, this) {
+        input = object : ACItemHandler.Tile<ACTileBrewery>(1, this) {
 
             override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack =
                 if (isItemValid(slot, stack)) super.insertItem(slot, stack, simulate) else stack
@@ -42,7 +42,7 @@ class ACTileBrewery : ACTileBase.Tickable(20 * 10), ITileContainer, ITileProvide
 
         }.setIOType(EnumIOType.INPUT)
 
-        ingredient = object : ACItemHandler<ACTileBrewery>(1, this) {
+        ingredient = object : ACItemHandler.Tile<ACTileBrewery>(1, this) {
 
             override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack =
                 if (isItemValid(slot, stack)) super.insertItem(slot, stack, simulate) else stack
@@ -52,7 +52,7 @@ class ACTileBrewery : ACTileBase.Tickable(20 * 10), ITileContainer, ITileProvide
 
         }.setIOType(EnumIOType.INPUT)
 
-        output = ACItemHandler(1, this).setIOType(EnumIOType.OUTPUT)
+        output = ACItemHandler.Tile(1, this).setIOType(EnumIOType.OUTPUT)
 
         inventory = ACItemHandlerWrapper(input, ingredient, output)
         return ACCapabilityProvider(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, inventory, inventory)

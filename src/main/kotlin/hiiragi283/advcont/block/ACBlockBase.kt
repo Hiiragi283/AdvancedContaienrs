@@ -1,6 +1,7 @@
 package hiiragi283.advcont.block
 
 import hiiragi283.advcont.AdvancedContainers
+import hiiragi283.advcont.creativetab.ACCreativeTabs
 import hiiragi283.advcont.init.IACEntry
 import hiiragi283.advcont.item.ACItemBlockBase
 import net.minecraft.block.Block
@@ -15,7 +16,6 @@ import net.minecraft.client.renderer.color.BlockColors
 import net.minecraft.client.renderer.color.ItemColors
 import net.minecraft.client.resources.I18n
 import net.minecraft.client.util.ITooltipFlag
-import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.IStringSerializable
@@ -31,7 +31,7 @@ abstract class ACBlockBase(ID: String, Material: Material, private val maxTips: 
 
     init {
         setRegistryName(AdvancedContainers.MOD_ID, ID)
-        creativeTab = CreativeTabs.BUILDING_BLOCKS
+        creativeTab = ACCreativeTabs.MAIN
         translationKey = "${AdvancedContainers.MOD_ID}.${ID}"
     }
 

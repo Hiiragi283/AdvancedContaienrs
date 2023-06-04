@@ -24,9 +24,9 @@ import net.minecraftforge.items.IItemHandler
 
 class ACTileFurnace : ACTileBase.Tickable(20 * 10), ITileContainer, ITileProvider.Inventory {
 
-    lateinit var input: ACItemHandler<ACTileFurnace>
-    lateinit var fuel: ACItemHandler<ACTileFurnace>
-    lateinit var output: ACItemHandler<ACTileFurnace>
+    lateinit var input: ACItemHandler.Tile<ACTileFurnace>
+    lateinit var fuel: ACItemHandler.Tile<ACTileFurnace>
+    lateinit var output: ACItemHandler.Tile<ACTileFurnace>
 
     var burnTime: Int = 0
 
@@ -47,7 +47,7 @@ class ACTileFurnace : ACTileBase.Tickable(20 * 10), ITileContainer, ITileProvide
     //    Capability    //
 
     override fun createInventory(): ACCapabilityProvider<IItemHandler> {
-        fuel = object : ACItemHandler<ACTileFurnace>(1, this) {
+        fuel = object : ACItemHandler.Tile<ACTileFurnace>(1, this) {
 
             override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack =
                 if (isItemValid(slot, stack)) super.insertItem(slot, stack, simulate) else stack
@@ -55,8 +55,8 @@ class ACTileFurnace : ACTileBase.Tickable(20 * 10), ITileContainer, ITileProvide
             override fun isItemValid(slot: Int, stack: ItemStack): Boolean = TileEntityFurnace.isItemFuel(stack)
 
         }.setIOType(EnumIOType.INPUT)
-        input = ACItemHandler(1, this).setIOType(EnumIOType.INPUT)
-        output = ACItemHandler(1, this).setIOType(EnumIOType.OUTPUT)
+        input = ACItemHandler.Tile(1, this).setIOType(EnumIOType.INPUT)
+        output = ACItemHandler.Tile(1, this).setIOType(EnumIOType.OUTPUT)
         inventory = ACItemHandlerWrapper(input, fuel, output)
         return ACCapabilityProvider(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, inventory, inventory)
     }

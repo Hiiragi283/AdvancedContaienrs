@@ -8,7 +8,6 @@ import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
-import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
@@ -25,7 +24,6 @@ object ACBlockFurnace :
 
     init {
         blockHardness = 3.5f
-        creativeTab = CreativeTabs.DECORATIONS
         defaultState = blockState.baseState.withProperty(BlockHorizontal.FACING, EnumFacing.NORTH)
             .withProperty(ACProperty.ACTIVE, false)
         soundType = SoundType.STONE

@@ -6,7 +6,6 @@ import net.minecraft.block.material.Material
 import net.minecraft.block.state.BlockFaceShape
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
-import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
@@ -27,7 +26,6 @@ object ACBlockAnvil : ACBlockContainer<ACTileAnvil>("anvil", Material.ANVIL, ACT
 
     init {
         blockHardness = 0.5f
-        creativeTab = CreativeTabs.DECORATIONS
         defaultState = blockState.baseState.withProperty(BlockHorizontal.FACING, EnumFacing.NORTH)
     }
 

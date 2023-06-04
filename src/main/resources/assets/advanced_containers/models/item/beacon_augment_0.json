@@ -2,6 +2,7 @@
   "credit": "Tweaked by Hiiragi Russell Tsubasa",
   "parent": "item/generated",
   "textures": {
-    "layer0": "advanced_containers:items/beacon_ring"
+    "layer0": "items/potion_bottle_drinkable",
+    "layer1": "items/potion_overlay"
   }
 }

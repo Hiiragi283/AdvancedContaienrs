@@ -1,6 +1,7 @@
 package hiiragi283.advcont.item
 
 import hiiragi283.advcont.AdvancedContainers
+import hiiragi283.advcont.creativetab.ACCreativeTabs
 import hiiragi283.advcont.init.IACEntry
 import hiiragi283.advcont.util.ModelUtil
 import net.minecraft.client.renderer.color.BlockColors
@@ -22,7 +23,7 @@ abstract class ACItemBase(ID: String, private var maxMeta: Int, private val maxT
 
     init {
         setRegistryName(AdvancedContainers.MOD_ID, ID)
-        creativeTab = CreativeTabs.MISC
+        creativeTab = ACCreativeTabs.MAIN
         hasSubtypes = maxMeta > 0
         maxMeta = 0.coerceAtLeast(maxMeta)
         translationKey = "${AdvancedContainers.MOD_ID}.${ID}"

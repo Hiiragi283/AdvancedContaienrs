@@ -1,6 +1,7 @@
 package hiiragi283.advcont.container
 
-import hiiragi283.advcont.item.ItemRingBeacon
+import hiiragi283.advcont.capabilitiy.ACItemHandler
+import hiiragi283.advcont.item.IBeaconAugment
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumHand
@@ -8,11 +9,15 @@ import net.minecraftforge.items.SlotItemHandler
 
 class ACContainerBeacon(val player: EntityPlayer) : ACContainerBase() {
 
-    private val ring: ItemStack = player.getHeldItem(EnumHand.MAIN_HAND)
-    private val handler = ItemRingBeacon.BeaconRingHandler(ring)
+    private val handler = ACItemHandler.Item(1, player.getHeldItem(EnumHand.MAIN_HAND))
 
     init {
-        addSlotToContainer(SlotItemHandler(handler, 0, 27, 47))
+        addSlotToContainer(object : SlotItemHandler(handler, 0, 27, 47) {
+
+            //IBeaconAugmentを実装したItemのみ通す
+            override fun isItemValid(stack: ItemStack): Boolean = stack.item is IBeaconAugment
+
+        })
         addPlayerInventory(player.inventory, 84)
     }
 

@@ -8,7 +8,7 @@ import hiiragi283.advcont.container.ACContainerAnvil
 import hiiragi283.advcont.container.ACContainerBeacon
 import hiiragi283.advcont.container.ACContainerBrewery
 import hiiragi283.advcont.container.ACContainerFurnace
-import hiiragi283.advcont.item.ItemRingBeacon
+import hiiragi283.advcont.item.ACItemBeaconRing
 import hiiragi283.advcont.tile.ACTileAnvil
 import hiiragi283.advcont.tile.ACTileBrewery
 import hiiragi283.advcont.tile.ACTileFurnace
@@ -39,9 +39,10 @@ object ACGuiHandler : IGuiHandler {
             //ID: 1 -> Item
             1 -> {
                 when (player.getHeldItem(EnumHand.MAIN_HAND).item) {
-                    is ItemRingBeacon -> container = ACContainerBeacon(player)
+                    is ACItemBeaconRing -> container = ACContainerBeacon(player)
                 }
             }
+
             else -> {}
         }
         return container
@@ -64,9 +65,10 @@ object ACGuiHandler : IGuiHandler {
             //ID: 1 -> Item
             1 -> {
                 when (player.getHeldItem(EnumHand.MAIN_HAND).item) {
-                    is ItemRingBeacon -> gui = ACGuiBeacon(player)
+                    is ACItemBeaconRing -> gui = ACGuiBeacon(player)
                 }
             }
+
             else -> {}
         }
         return gui
