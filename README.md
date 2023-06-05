@@ -1,16 +1,30 @@
-## TemplateDevEnv
+# Advanced Contaienrs
 
-Template workspace for modding Minecraft 1.12.2. Licensed under MIT, it is made for public use.
+## Overview
 
-This template currently utilizies **Gradle 8.1.1** + **[RetroFuturaGradle](https://github.com/GTNewHorizons/RetroFuturaGradle) 1.3.6** + **Forge 14.23.5.2847**.
+- Minecraft mod for MC 1.12.2-Forge
+- Upgrades vanilla facilities such as Furnace, Brewing Stand, and so on
+- _**Requires [Shadowfacts' Forgelin](https://www.curseforge.com/minecraft/mc-mods/shadowfacts-forgelin)**_
 
-With **coremod and mixin support** that is easy to configure.
+## Features
 
-### Instructions:
+- [x] Advanced Anvil: Repairs ANY tools with three repair items
+- [x] Advanced Brewery: Can be automated easily by Hopper
+- [ ] Advanced Cauldron: Cauldron with fluid tank
+- [ ] Advanced Chest: Chest with Full-Block collision box and non-TESR model
+- [ ] Advanced Crafting Table: Stores ItemStacks in crafting grids, and can be automated by Redstone signal
+- [ ] Advanced Ender Chest: Portable version
+- [ ] Advanced Enchating Table: WIP
+- [x] Advanced Furnace: Stores remaining burn time
+- [ ] Advanced Hopper: Imports/Exports ItemStacks with max stack size
+- [ ] Beacon Ring: Portable version
+- [ ] Dispenser Addition
+  - [ ] Bowl: Extract Mushroom Stew from Mooshroom, Rabbit Stew from Rabbit, Beetroot Soup from Beetroot
+  - [ ] Bucket: Extract Milk from Cow
+  - [ ] Records: Can be inserted to Jukebox
+  - [ ] Shears: Harvest Wool from Sheep
+- [ ] Dynamite: Break blocks with 3x3x1 range
 
-1. Click `use this template` at the top.
-2. Clone the repository you have created with this template.
-3. In the local repository, run the command `gradlew setupDecompWorkspace`
-4. Open the project folder in IDEA.
-5. Right-click in IDEA `build.gradle` of your project, and select `Link Gradle Project`, after completion, hit `Refresh All` in the gradle tab on the right.
-6. Run `gradlew runClient` and `gradlew runServer`, or use the auto-imported run configurations in IntelliJ like `1. Run Client`.
+## Integration
+
+- Just Enough Items/Had Enough Items
