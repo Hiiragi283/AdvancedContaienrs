@@ -46,8 +46,8 @@ abstract class ACItemBase(ID: String, private var maxMeta: Int, private val maxT
         val path = stack.item.registryName!!.path
         if (maxTips != -1) {
             tooltip.add("§e=== Info ===")
-            for (i in 0..maxTips) {
-                tooltip.add(I18n.format("tips.${AdvancedContainers.MOD_ID}.${path}.$i"))
+            (0..maxTips).forEach {
+                tooltip.add(I18n.format("tips.${AdvancedContainers.MOD_ID}.${path}.$it"))
             }
         }
     }
@@ -56,8 +56,8 @@ abstract class ACItemBase(ID: String, private var maxMeta: Int, private val maxT
     override fun getSubItems(tab: CreativeTabs, subItems: NonNullList<ItemStack>) {
         if (isInCreativeTab(tab)) {
             //メタデータの最大値まで処理を繰り返す
-            for (i in 0..maxMeta) {
-                subItems.add(ItemStack(this, 1, i))
+            (0..maxMeta).forEach {
+                subItems.add(ItemStack(this, 1, it))
             }
         }
     }

@@ -80,10 +80,11 @@ object ACItemPotion : ACItemBase("potion", 0, 0) {
     @SideOnly(Side.CLIENT)
     override fun getSubItems(tab: CreativeTabs, subItems: NonNullList<ItemStack>) {
         if (isInCreativeTab(tab)) {
-            for (potion in PotionType.REGISTRY) {
-                if (potion !== PotionTypes.EMPTY) {
-                    subItems.add(PotionUtils.addPotionToItemStack(ItemStack(this), potion))
+            PotionType.REGISTRY.forEach {
+                if (it !== PotionTypes.EMPTY) {
+                    subItems.add(PotionUtils.addPotionToItemStack(ItemStack(this), it))
                 }
+
             }
         }
     }

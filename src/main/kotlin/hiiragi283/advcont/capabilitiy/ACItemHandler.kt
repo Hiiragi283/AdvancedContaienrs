@@ -17,21 +17,24 @@ sealed class ACItemHandler(slots: Int) : ItemStackHandler(slots), ICapabilityIO<
 
     //    Custom    //
 
-    open fun isEmpty(): Boolean {
+    /*open fun isEmpty(): Boolean {
         var result = 0
-        for (slot in 0 until slots) {
-            val stack = getStackInSlot(slot)
+        IntRange(0, slots - 1).forEach {
+            val stack = getStackInSlot(it)
             if (stack.isEmpty) result++
         }
         return result == slots
-    }
+    }*/
+
+    open fun isEmpty(): Boolean = (0 until slots - 1)
+        .toList()
+        .map { getStackInSlot(it) }
+        .all { it.isEmpty }
 
     open fun clear(): Unit = clear(0 until slots)
 
     open fun clear(range: IntRange) {
-        for (slot in range) {
-            setStackInSlot(slot, ItemStack.EMPTY)
-        }
+        range.forEach { setStackInSlot(it, ItemStack.EMPTY) }
     }
 
     //    For ItemStack    //

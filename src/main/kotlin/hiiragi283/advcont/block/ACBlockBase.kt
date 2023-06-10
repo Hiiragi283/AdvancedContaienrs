@@ -86,8 +86,8 @@ abstract class ACBlockBase(ID: String, Material: Material, private val maxTips: 
         val path = stack.item.registryName!!.path
         if (maxTips != -1) {
             tooltip.add("§e=== Info ===")
-            for (i in 0..maxTips) {
-                tooltip.add(I18n.format("tips.${AdvancedContainers.MOD_ID}.${path}.$i"))
+            (0..maxTips).forEach {
+                tooltip.add(I18n.format("tips.${AdvancedContainers.MOD_ID}.${path}.$it"))
             }
         }
     }

@@ -10,7 +10,6 @@ import net.minecraft.init.Items
 import net.minecraft.item.EnumRarity
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.PotionUtils
-import net.minecraft.util.NonNullList
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.common.IRarity
 import net.minecraftforge.registries.IForgeRegistry
@@ -19,14 +18,6 @@ import net.minecraftforge.registries.IForgeRegistryModifiable
 fun Boolean.toInt() = if (this) 1 else 0
 
 fun Int.toBoolean() = this % 2 != 0
-
-fun List<ItemStack>.toNonNullList(): NonNullList<ItemStack> {
-    return NonNullList.withSize(this.size, ItemStack.EMPTY).also {
-        for (i in 0 until this.size) {
-            it[i] = this[i]
-        }
-    }
-}
 
 fun executeCommand(sender: ICommandSender, command: String) {
     Minecraft.getMinecraft().integratedServer?.getCommandManager()?.executeCommand(sender, command)

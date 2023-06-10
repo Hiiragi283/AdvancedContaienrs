@@ -13,17 +13,13 @@ import net.minecraftforge.items.IItemHandlerModifiable
  * Thanks to SkyTheory!
  */
 
-class ACItemHandlerWrapper(vararg itemHandlers: ACItemHandler) : IItemHandler, IItemHandlerModifiable,
+open class ACItemHandlerWrapper(vararg itemHandlers: ACItemHandler) : IItemHandler, IItemHandlerModifiable,
     INBTSerializable<NBTTagCompound> {
 
     private val pairs: MutableList<Pair<ACItemHandler, Int>> = mutableListOf()
 
     init {
-        itemHandlers.forEach {
-            for (slot in 0 until it.slots) {
-                pairs.add(it to slot)
-            }
-        }
+        itemHandlers.forEach { handler -> (0 until handler.slots).forEach { pairs.add(handler to it) } }
     }
 
     //    Slot    //
@@ -74,13 +70,13 @@ class ACItemHandlerWrapper(vararg itemHandlers: ACItemHandler) : IItemHandler, I
 
     override fun serializeNBT(): NBTTagCompound {
         val nbtTagList = NBTTagList()
-        for (i in pairs.indices) {
-            val pair = getSlotHandler(i)
+        pairs.indices.forEach {
+            val pair = getSlotHandler(it)
             val stack = pair.first.getStackInSlot(pair.second)
-            if (!stack.isEmpty) NBTTagCompound().also {
-                it.setInteger("Slot", i)
-                stack.writeToNBT(it)
-                nbtTagList.appendTag(it)
+            if (!stack.isEmpty) NBTTagCompound().also { tag ->
+                tag.setInteger("Slot", it)
+                stack.writeToNBT(tag)
+                nbtTagList.appendTag(tag)
             }
         }
         return NBTTagCompound().also { it.setTag("Items", nbtTagList) }
@@ -88,8 +84,8 @@ class ACItemHandlerWrapper(vararg itemHandlers: ACItemHandler) : IItemHandler, I
 
     override fun deserializeNBT(nbt: NBTTagCompound) {
         val tagList = nbt.getTagList("Items", Constants.NBT.TAG_COMPOUND)
-        for (i in 0 until tagList.tagCount()) {
-            val tag = tagList.getCompoundTagAt(i)
+        (0 until tagList.tagCount()).forEach {
+            val tag = tagList.getCompoundTagAt(it)
             val slot = tag.getInteger("Slot")
             if (slot in 0 until pairs.size) {
                 val pair = getSlotHandler(slot)
@@ -100,20 +96,15 @@ class ACItemHandlerWrapper(vararg itemHandlers: ACItemHandler) : IItemHandler, I
 
     //    Custom    //
 
-    fun isEmpty(): Boolean {
-        var result = 0
-        for (slot in 0 until slots) {
-            val stack = getStackInSlot(slot)
-            if (stack.isEmpty) result++
-        }
-        return result == slots
-    }
+    fun isEmpty(): Boolean = (0 until slots - 1)
+        .toList()
+        .map { getStackInSlot(it) }
+        .all { it.isEmpty }
 
     fun clear(): Unit = clear(0 until slots)
 
     fun clear(range: IntRange) {
-        for (slot in range) {
-            setStackInSlot(slot, ItemStack.EMPTY)
-        }
+        range.forEach { setStackInSlot(it, ItemStack.EMPTY) }
     }
+
 }

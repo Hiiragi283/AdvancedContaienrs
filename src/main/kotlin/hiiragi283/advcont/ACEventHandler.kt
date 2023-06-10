@@ -2,6 +2,7 @@ package hiiragi283.advcont
 
 import hiiragi283.advcont.init.ACBlocks
 import hiiragi283.advcont.init.ACItems
+import hiiragi283.advcont.recipe.RecipePotionStackable
 import hiiragi283.advcont.tile.ITileProvider
 import net.minecraft.block.Block
 import net.minecraft.item.Item
@@ -48,7 +49,7 @@ object ACEventHandler {
     @SubscribeEvent
     fun registerRecipe(event: RegistryEvent.Register<IRecipe>) {
         val registry = event.registry
-        registry.register(RecipePotionStackable().setRegistryName(AdvancedContainers.MOD_ID, "potion"))
+        registry.register(RecipePotionStackable.setRegistryName(AdvancedContainers.MOD_ID, "potion"))
     }
 
     @SideOnly(Side.CLIENT)
